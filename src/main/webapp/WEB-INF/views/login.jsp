@@ -37,17 +37,17 @@ href="css/login.css"/>
 			<div class="person_login">
 				<h2 class="sub_title title01">일반 개인회원</h2>
 				<div class="login">
-				  <form action="Controller" method="post">
+				  <form action="login" method="post">
    				  <!-- ↱ 위에가 post 방식으로 보내므로 hidden으로 보내는 거임 -->
 				  	<input type="hidden" name="type" value="login" />
 					<div class="input_area">
 						<p>
 						 <label for="s_id">아이디</label>
-						 <input type="text" name="id" id="s_id"/>
+						 <input type="text" name="m_id" id="s_id"/>
 						</p>
 						<p>
 						 <label for="s_pw">비밀번호</label>
-						 <input type="password" name="pw" id="s_pw"/>
+						 <input type="password" name="m_pw" id="s_pw"/>
 						</p>
 					</div>
 					<div class="btnArea_right">
