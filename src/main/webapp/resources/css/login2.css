@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+#contents_sub{
+    width: 900px;
+    height: auto;
+    margin: auto;
+    padding-top: 30px;
+}
+h1.tit02{
+    width: 132px;
+    height: 30px;
+    background-position: 0 -50px;
+}
+
+.login_area{
+    background: url(../img/login_bg.png) no-repeat;
+    width: 750px;
+    height: 205px;
+    margin: 80px auto;
+    padding: 20px 70px;
+}
+
+.sub_title{
+    background: url(../img/sub_title.png);
+    text-indent: -9999px;
+}
+
+.person_login{
+    float: left;
+    width: 290px;
+}
+
+.group_login{
+    float: right;
+    width: 290px;;
+}
+
+.login{
+    padding: 15px 0;
+}
+
+h2.title01{
+    background-position: 0 -80px;
+    width: 290px;
+    height: 75px;
+}
+h2.title02{
+    background-position: 0 -160px;
+    width: 290px;
+    height: 75px;
+}
+
+.login .input_area p label{
+    background: url(../img/bult.png) no-repeat 0 -74px;
+    padding-left: 10px;
+}
+.login .input_area p{
+    padding: 3px 0;
+}
+
+.login .input_area p:first-child{
+    padding-top: 0;
+}
+
+.login_search{
+    border-top: 2px solid #efefef;
+    margin-top: 10px;
+    padding: 10px 0;
+    position: relative;
+}
+.login .input_area{
+    float: left;
+    width: 202px;
+}
+
+.login .input_area p input{
+    width: 110px;
+    border: 1px solid #ccc;
+    height: 14px;
+    padding: 5px;
+    border-radius: 3px;
+}
+/* 로그인 버튼부분 */
+.btnArea_right{
+    float: right;
+}
+
+.btn{
+    display: inline-block;
+    background: url(../img/btn.png) no-repeat;
+    text-indent: -9999px;
+}
+
+.btn a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.b_login{
+    width: 86px;
+    height: 56px;
+    background-position: 0 0;
+}
+
+.b_search{
+    width: 156px;
+    height: 27px;
+    background-position: -100px 0;
+    position: absolute;
+    right: 0;
+    top: 3px;
+}
+
+

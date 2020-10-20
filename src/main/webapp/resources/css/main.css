@@ -1,0 +1,196 @@
+@charset "UTF-8";
+
+#contents{
+	width: 970px;  /* common의 너비랑 같게 */
+	height: auto;
+	margin: auto;
+}
+
+#contents .main_img{
+	width: 100%;
+	height: 360px;
+}
+#contents .main_img img{
+	width: 100%;
+	height: 360px;
+}
+
+/* 메인이미지 밑에 있는 뉴스들 */
+#contents .main_news{
+	width: auto;
+	height: 240px;
+	background: url(../img/gra_bg.png) repeat-x;  /* repeat-x로 인해 x좌표 즉 옆으로 쭉 채워진다. */
+	padding: 40px 50px;
+	
+}
+
+#contents .news_type01{  /* 아이디가 contents인 요소의 자손들 중 클래스가 news_type01인 요소들을 선택 */
+	width: 245px;
+	overflow: hidden;
+	float: left;
+}
+
+#contents .news_type01.cen{   /* #contents .cen 이라고 쓰는 것은 위험하다 */
+							  /* 아이디가 contents인 요소의 자손들 중 클래스가 news_type01인 요소들 중에서					
+							  	cen이라는  클래스도 같이 가지고 있는 요소들을 선택한다. */
+	margin: 0 60px;
+}
+
+#contents .title{  /* 타이틀에 이미지 주기 */
+	height: 20px;
+	background: url(../img/main_title.png) no-repeat;
+	text-indent: -9999px;
+	margin-bottom: 5px;	
+}
+
+#contents .main_news .news_type01:nth-child(1) .title{  /* nth-child(여기에 자식의 순서를 입력하면 됨) */
+	/* ↳news_type01이 총 3개가 있다. 이중에 첫번째를 의미하고, 그안에 있는 
+		자손 요소들 중 클래스가 title인 요소에 적용한다는  */
+	background-position: 0 0;
+}
+#contents .main_news .news_type01:nth-child(2) .title{
+	background-position: 0 -20px;
+}
+#contents .main_news .news_type01:nth-child(3) .title{
+	background-position: 0 -40px;
+}
+#contents .main_news .news_type01 .news_src{
+	display: block;
+	overflow: hidden;
+}
+
+#contents .main_news .news_type01 .thum_img{
+	position: relative;
+	display: inline-block;
+	overflow: hidden;
+	width: 245px;
+	height: 148px;
+}
+
+#contents .main_news .news_type01 .thum_img img{
+	width: 100%;
+	height: 100%;
+}
+
+#contents .main_news .news_type01 .thum_img .btn_play{ 
+	display: inline-block;
+	width: 52px;
+	height: 51px;
+	position: absolute;  /* tum_img를 기준으로 절대적 기준을 설정하기위해 */
+	top: 50px;
+	left: 96px;
+	background: url(../img/icon_play.png) no-repeat;
+}
+
+.main_news .news_type01 .subject{
+	height: 35px;
+	font-weight: bold;
+	line-height: 35px;
+}
+.main_news .news_type01 .subject:hover {
+	color: #ff5001;
+}
+
+.main_news .news_type01 .writer{
+	float: left;
+}
+.main_news .news_type01 .more_view{
+	float: right;
+}
+
+/*********************************************************/
+.main_board{
+	width: auto;
+	padding: 50px 45px;  
+}
+
+.main_board .board_type01{  
+	position: relative;  /* 여기서 position을 해줘야 안에 있는 것들을 absolute로 지정하여 움직이게 할 수 있다. */
+	width: 240px;
+	overflow: hidden;
+	float: left;
+}
+
+#contents .board_type01:nth-child(1) .title{
+	background-position: 0 -60px;
+}
+#contents .board_type01:nth-child(2) .title{
+	background-position: 0 -80px;
+}
+
+.main_board .board_type01 .more_view{
+	position: absolute;
+	right: 0;
+	top: 3px;
+}
+
+.main_board .board_type01 .title{
+	border-bottom: 1px solid #efefef;
+	margin-bottom: 7px;
+}
+
+.main_board .board_type01 .notice li{
+	position: relative;  /* 날짜를 우측으로 보내기 위해서 */
+	height: 23px;
+	line-height: 23px;
+}
+
+.main_board .board_type01 .notice li a{
+	display: inline-block;
+	width: 200px;
+	overflow: hidden;
+}
+
+.main_board .board_type01 .notice li .date{
+	position: absolute;
+	right: 0px;
+	top: 3px;
+	font-size: 11px;
+}
+
+.main_board .board_type01 .article{
+	display: block;
+	overflow: hidden;
+}
+.main_board .board_type01 .article .thum_img{
+	float: left;  /* 글씨를 위로 보내기 위해 */
+	display: block;
+	width: 67px;
+	height: 67px;
+	margin-right: 7px;
+}
+.main_board .board_type01.cen{   /* 공지사항이랑 T-together 사이를 띄우기 위해 */
+	margin: 0 50px;
+}
+
+.main_board .board_type01 .article .src{
+	float: right;
+	width: 165px;
+	padding-top: 7px;
+}
+
+/***** 배너 *****/
+.main_board .board_type01.fr{
+	width: 285px;
+}
+
+.main_board .board_type01 .banner{
+	display: inline-block;
+	width: 137px;
+	height: 118px;
+	border: 1px solid #dedede;
+	text-indent: -9999px;
+	background: url(../img/main_banner.png) no-repeat;
+}
+
+.main_board .board_type01 .banner a{ /* a태그가 작아서 마우스 올라가도 변하지를 않으므로 크기를 변경시켜줌 */
+	display: block;   /* a태그는 인라인레벨이므로 블록레벨로 변경시킴 */
+	width: 100%;
+	height: 100%;
+}
+/* .main_board .board_type01 .b02 이것도 가능 */
+.main_board .board_type01 .banner:nth-child(2){
+	background-position: -137px 0;
+}
+
+
