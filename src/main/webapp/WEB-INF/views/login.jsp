@@ -37,7 +37,7 @@ href="css/login.css"/>
 			<div class="person_login">
 				<h2 class="sub_title title01">일반 개인회원</h2>
 				<div class="login">
-				  <form action="login" method="post">
+				  <form action="login" method="post" id="aa">
    				  <!-- ↱ 위에가 post 방식으로 보내므로 hidden으로 보내는 거임 -->
 				  	<input type="hidden" name="type" value="login" />
 					<div class="input_area">
@@ -50,7 +50,7 @@ href="css/login.css"/>
 						 <input type="password" name="m_pw" id="s_pw"/>
 						</p>
 					</div>
-					<div class="btnArea_right">
+					<div class="btnArea_right" id="login_btn">
 						<span class="btn b_login">
 						 <a href="javascript:exe()">로그인</a>
 						</span>
@@ -130,8 +130,43 @@ href="css/login.css"/>
 	<!-- 하단 영역 끝 -->
 </div>
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+
 <script type="text/javascript">
-	function exe() {
+
+	$(document).ready(function() {
+		$("#login_btn").on('click', function() {
+			loginChk();
+		})
+	});
+	
+	function loginChk() {
+		$.ajax({
+			url: "loginChk",
+			type: "post",
+			data: {m_id:$("#s_id").val(), m_pw:$("#s_pw").val()},
+			dataType: "JSON"
+		}).done(function(data) {
+			if (data.fa == "fail") {
+				alert(data.fa)
+				location.reload();
+			}else {			
+				location.href = "index";
+			}
+		}).fail(function(err) {
+			console.log(err.statusText);
+		});
+
+	}
+	
+	/* success: function(data) {
+	//alert(data.Msg);
+	$(location).attr("href", "index");
+} */
+	
+	
+/* 	function exe() {
 		//var id = document.forms[0].id.value();
 		var id = document.getElementById("s_id").value;
 		var pw = document.getElementById("s_pw").value;
@@ -146,7 +181,16 @@ href="css/login.css"/>
 			return;
 		}
 		document.forms[0].submit();
-	}
+		
+		
+	} */
+
+
+	
+	
 </script>
 </body>
 </html>
+
+
+

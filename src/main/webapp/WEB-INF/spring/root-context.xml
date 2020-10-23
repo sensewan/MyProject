@@ -1,8 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	
+	
+	<!-- ↱DAO의 @Autowired사용 가능하게 함 -->
+	<context:annotation-config/>
+	
+	                                        <!-- ↱ jdbc.properties파일을 로드함 -->
+	<context:property-placeholder location="classpath:mybatis/prop/jdbc.properties"/>
+	
+	
+	<!-- ★★DataSource(DS)★★ 만듦 -->
+	<!-- ↱ 다른 곳에서 쓰기 위해 id부여 -->
+	<bean id="ds" class="org.apache.commons.dbcp.BasicDataSource">
+		<!-- ↱name에 적은 변수에 위에서 만든 jdbc.properties의 변수를 입력해주자 -->
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.pwd}" />
+		<property name="maxActive" value="${jdbc.maxActive}" />
+		<property name="maxIdle" value="${jdbc.maxIdle}" />
+		<property name="minIdle" value="${jdbc.minIdle}" />
+	</bean>
+	
+	<!-- ★★Factory★★ 만듦 -->
+	<bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds"/>
+		<!-- ↱ 맵퍼연결(member.xml)  맵퍼들을 한곳의 폴더에 몰아 놓고 사용하기. -->
+		<property name="mapperLocations" value="classpath:mybatis/mapper/*.xml"/>
+	</bean>
+	
+	
+	
+	<!-- ★★Template★★ 만듦 -->
+	<!-- SqlSession과 같은 것으로 스프링에서는 SqlSessionTemplate임 즉 템플릿 생성후 -> DAO를 정의하자!!
+		 이렇게 될 경우  DAO들 안에서 factory를 멤버로 잡아야 하지만 
+		 Spring에서는 SqlSessionTemplate을 자체적으로 관리가 되므로 SqlSessionTemplate을 DAO에 넣고 사용해야 함  -->	 
+	<bean id = "sst" class="org.mybatis.spring.SqlSessionTemplate">
+		<!-- SqlSessionTemplate사용할려면 생성자를 통해 정의해줘야 함 -->
+		<constructor-arg ref="factory"/>
+	</bean>
+	
+	<!-- ★★DAO★★ 만듦 -->
+	<bean id="memDao" class="mybatis.dao.MemDAO"/>
+	
 </beans>

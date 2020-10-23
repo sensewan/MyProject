@@ -1,3 +1,4 @@
+<%@page import="mybatis.vo.MemVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -19,19 +20,36 @@
 
 </head>
 <body>
+
+<%
+	Object obj = session.getAttribute("login");	
+%>
+
+
 	<div id="wrap">
 		<!-- ┌상단 영역 -->
 		<div id="header">
 			<div class="txt_right">
 			 
-			<c:if test="${!login_chk }">
+			<%
+				if(obj == null){
+			%>
 			                 <!-- ↱IndexController.java로 이동함 -->			
 				<span><a href="login">로그인</a></span>
-			</c:if>
-			<c:if test="${login_chk }">
+				
+			<%
+				}else{
+					MemVO vo = (MemVO)obj;
+			%>
 			                    <!-- ↱post방식으로 하기!! -->
-				<span><a href="javascript:logout()">로그아웃</a></span>
-			</c:if>
+			    <p style="border: 2px solid blue;">(<%=vo.getM_name() %>)고갱님 격하게 환영합니다ㅠ</p>
+				<span id="logout_btn"><a href="logout">로그아웃</a></span>
+			
+			<%
+				}
+			%>
+			
+			
 			</div>
 			<h1>SK Together</h1> <!-- img src로 할 수 있지만 그러면 시각장애인들이 읽지를 못한다. -->
 			<ul class="gnb">
@@ -125,6 +143,7 @@
 					
 					<c:if test="${ar == null }">
 						<li>등록된 공지가 없습니다.</li>
+						<li>${log.m_id }</li>
 					</c:if>
 					</ul>
 				</div>
@@ -195,13 +214,31 @@
 		<input type="hidden" name="type">
 	</form>
 	
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	
 	<script type="text/javascript">
+
+		$(function () {
+			
+			$("#logout_btn").on("click", function() {
+				logout();
+			})
+			
+		});
+		
 		function logout() {
-			//현재 문서에서 이름이 frm인 폼을 알아내어 -> 그안에 있는 요소들 중 
-			// 이름이 type인 요소(value)의 값을 "logout"으로 지정하기
-			document.frm.type.value = "logout";
-			document.frm.submit();
+			$.ajax({
+				url: "logout",
+				type: "get",
+				dataType:"JSON"
+			}).done(function(data){
+				location.href=data.home;
+			});
 		}
 	</script>
 </body>
 </html>
+
+
+
+

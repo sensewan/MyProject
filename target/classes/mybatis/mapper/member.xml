@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mem">
+
+	<select id="all" resultType="mybatis.vo.MemVO">
+		select * from member_t
+	</select>
+	
+	<!-- 로그인시 필요한 select -->
+	<select id="login" resultType="mybatis.vo.MemVO" parameterType="java.util.Map">
+		select * from member_t where m_id =#{m_id} and m_pw = #{m_pw}
+	</select>
+
+
+</mapper>
