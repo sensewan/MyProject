@@ -209,7 +209,7 @@
 	</div>
 	<!-- ===================================================== -->
 	
-	<!-- ↱로그아웃을 post방식으로 보내기 위해 만듦 -->
+	<!-- ↱로그아웃을 post방식으로 보내기 위해 만듦 (예전거임..) -->
 	<form action="Controller" method="post" name="frm">
 		<input type="hidden" name="type">
 	</form>

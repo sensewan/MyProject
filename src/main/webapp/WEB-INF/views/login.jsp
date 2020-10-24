@@ -150,7 +150,7 @@ href="css/login.css"/>
 		}).done(function(data) {
 			if (data.fa == "fail") {
 				alert(data.fa)
-				location.reload();
+				//location.reload();
 			}else {			
 				location.href = "index";
 			}

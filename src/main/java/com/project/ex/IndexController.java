@@ -24,14 +24,14 @@ public class IndexController {
 	@Autowired
 	private MemDAO m_dao;
 
-	//               ↱뒤에 아무것도 입력하지 않은 상태임 즉 프로젝트 실행하면 바로 실행됨
+	//                        ↱뒤에 아무것도 입력하지 않은 상태임 즉 프로젝트 실행하면 바로 실행됨
 	@RequestMapping(value = {"/", "/index"})
 	public String index() {
 		
 		return "index";   // views/index.jsp를 의미
 	}
 	
-	// ↱브라우저에서 /login이 입력될경우 실행됨
+	// ↱브라우저에서 /login이 입력될경우 실행됨 (즉 로그인 버튼 클릭했을 경우 -> login.jsp로 이동)
 	@RequestMapping("/login")
 	public String login() {
 		return "login";  // views/login.jsp를 의
@@ -69,14 +69,13 @@ public class IndexController {
 		
 		if (vo !=null) {
 			map.put("Msg", Msg);
-			map.put("log", vo);	
+			//map.put("log", vo);	
+			HttpSession session = request.getSession();
+			session.setAttribute("login", vo);
+			
 		}else {
 			map.put("fa", fa);
 		}
-		
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("login", vo);
 		
 		return map;
 	}
