@@ -21,9 +21,7 @@
 </head>
 <body>
 
-<%
-	Object obj = session.getAttribute("login");	
-%>
+
 
 
 	<div id="wrap">
@@ -31,23 +29,16 @@
 		<div id="header">
 			<div class="txt_right">
 			 
-			<%
-				if(obj == null){
-			%>
+			<c:if test="${sessionScope.mvo == null}">
 			                 <!-- ↱IndexController.java로 이동함 -->			
 				<span><a href="login">로그인</a></span>
+			</c:if>
 				
-			<%
-				}else{
-					MemVO vo = (MemVO)obj;
-			%>
+			<c:if test="${sessionScope.mvo != null }">
 			                    <!-- ↱post방식으로 하기!! -->
-			    <p style="border: 2px solid blue;">(<%=vo.getM_name() %>)고갱님 격하게 환영합니다ㅠ</p>
-				<span id="logout_btn"><a href="logout">로그아웃</a></span>
-			
-			<%
-				}
-			%>
+			    <p style="border: 2px solid blue;">(${mvo.m_name })고갱님 격하게 환영합니다ㅠ</p>
+				<span id="logout_btn"><a href="javascript:logout()">로그아웃</a></span>
+			</c:if>
 			
 			
 			</div>
@@ -217,24 +208,40 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 	
 	<script type="text/javascript">
-
-		$(function () {
+	
+	function logout() {
+		$.ajax({
+			url: "logout",
+			type: "get",
+			dataType:"JSON"
+		}).done(function(data){
+			if (data.res == 0) {
+				alert("로그아웃 완료");
+				location.href="index";
+			}else {
+				alert("로그아웃 실패");
+			}
+		});
+	}
+	
+	
+/* 		$(function () {
 			
 			$("#logout_btn").on("click", function() {
-				logout();
-			})
-			
-		});
-		
-		function logout() {
-			$.ajax({
-				url: "logout",
-				type: "get",
-				dataType:"JSON"
-			}).done(function(data){
-				location.href=data.home;
+				
+				$.ajax({
+					url: "logout",
+					type: "get",
+					dataType: "JSON"
+				}).done(function(data) {
+					//location.href = data.home;
+					
+				});
 			});
-		}
+		});
+		 */
+		
+ 		
 	</script>
 </body>
 </html>

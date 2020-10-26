@@ -50,9 +50,10 @@ href="css/login.css"/>
 						 <input type="password" name="m_pw" id="s_pw"/>
 						</p>
 					</div>
-					<div class="btnArea_right" id="login_btn">
+					<div class="btnArea_right">
 						<span class="btn b_login">
-						 <a href="javascript:exe()">로그인</a>
+						<!-- ↱ href="" 이렇게 있을 경우 페이지가 없는게 아니라 현재 페이지를 새로고침한다. -->
+						 <a id="login_btn">로그인</a>
 						</span>
 					</div>
 					<div class="fclear"></div>
@@ -76,12 +77,12 @@ href="css/login.css"/>
 				  <form action="" method="post">
 					<div class="input_area">
 						<p>
-						 <label for="s_id">아이디</label>
-						 <input type="text" name="id" id="s_id"/>
+						 <label for="s_id2">아이디</label>
+						 <input type="text" name="id" id="s_id2"/>
 						</p>
 						<p>
-						 <label for="s_pw">비밀번호</label>
-						 <input type="password" name="pw" id="s_pw"/>
+						 <label for="s_pw2">비밀번호</label>
+						 <input type="password" name="pw" id="s_pw2"/>
 						</p>
 					</div>
 					<div class="btnArea_right">
@@ -92,7 +93,7 @@ href="css/login.css"/>
 					<div class="fclear"></div>
 					<p class="login_search">
 						<input type="checkbox" name="chk" 
-						 id="ch01"/><label for="ch01">
+						 id="ch02"/><label for="ch02">
 						 아이디저장</label>
 						<span class="btn b_search">
 						  <a href="">아이디/비밀번호찾기</a>
@@ -135,7 +136,52 @@ href="css/login.css"/>
 
 <script type="text/javascript">
 
-	$(document).ready(function() {
+
+	$(function() {
+		// ↱ id가 login_btn인 요소 클릭 했을때 이벤트 발생
+		$("#login_btn").bind("click", function() {
+			var id = $("#s_id").val();
+			var pw = $("#s_pw").val();
+			
+			// ↱하나도 입력하지 않은 경우 및 공백만 입력한 경우.
+			if (id.trim().length < 1) {
+				alert("아이디 입력하시오.");
+				$("#s_id").val(""); //초기화
+				$("#s_id").focus();
+				return;
+			}
+			
+			if (pw.trim().length < 1) {
+				alert("아이디 입력하시오.");
+				$("#s_pw").val(""); //초기화
+				$("#s_pw").focus();
+				return;
+			}
+			
+			//console.log(id+"/"+pw);
+		
+			 $.ajax({
+				url: "login",
+				type: "post",
+				data: "m_id="+encodeURIComponent(id)+"&m_pw="+encodeURIComponent(pw),
+				dataType: "JSON"
+			}).done(function(data) {
+				if (data.res == "0") {
+					alert("아아디 비번 제대로 입력하시오!~");
+					//location.reload();
+				}else {
+					alert(data.mvo.m_name+"님 환영합니다. 처음화면으로 이동합니다.")
+					location.href="index";
+				}
+				
+			}).fail(function(err) {
+				console.log(err.statusText);
+			}); 
+		});
+	});  
+	
+	
+/* 	$(document).ready(function() {
 		$("#login_btn").on('click', function() {
 			loginChk();
 		})
@@ -158,12 +204,8 @@ href="css/login.css"/>
 			console.log(err.statusText);
 		});
 
-	}
+	} */
 	
-	/* success: function(data) {
-	//alert(data.Msg);
-	$(location).attr("href", "index");
-} */
 	
 	
 /* 	function exe() {

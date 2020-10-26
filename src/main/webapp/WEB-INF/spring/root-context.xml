@@ -7,11 +7,12 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- 아래 창에서 Namespaces에서 context클릭 해주기!!!! -->
 	
 	<!-- ↱DAO의 @Autowired사용 가능하게 함 -->
 	<context:annotation-config/>
 	
-	                                        <!-- ↱ jdbc.properties파일을 로드함 -->
+	                                        <!-- ↱ 패키지를 인식해서 jdbc.properties파일을 로드함 -->
 	<context:property-placeholder location="classpath:mybatis/prop/jdbc.properties"/>
 	
 	
@@ -47,6 +48,7 @@
 	</bean>
 	
 	<!-- ★★DAO★★ 만듦 -->
-	<bean id="memDao" class="mybatis.dao.MemDAO"/>
-	
+	<!-- <bean id="memDao" class="mybatis.dao.MemDAO"/> -->
+	<!-- 여러 DAO들을 자동 적용  -> ~~DAO.java로 가서 DAO클래스 위에 @Component 추가해줘야 한다. -->
+	<context:component-scan base-package="mybatis.dao"/>	
 </beans>
