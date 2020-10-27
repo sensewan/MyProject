@@ -38,9 +38,9 @@ public class MemberController {
 		// 인자 두개를 MemDAO의 login함수를 호출하면서 전달하면 정확한 정보일 때만 
 		// MemVO한개를 받게 된다.
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
 		MemVO mvo = m_dao.login(m_id, m_pw);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
 		
 		// mvo가 null이면 아이디 및 비번을 잘 못 입력한 경우임.
 		if (mvo != null) {

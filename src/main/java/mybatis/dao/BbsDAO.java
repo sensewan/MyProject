@@ -36,8 +36,7 @@ public class BbsDAO {
 			list.toArray(ar);
 		}
 
-		return ar;
-		
+		return ar;	
 	}
 	
 	
@@ -45,8 +44,6 @@ public class BbsDAO {
 	public int totalCount(String bname) {
 		
 		int cnt = sst.selectOne("bbs.totalCount", bname);
-		
-
 		
 		return cnt;
 	}
@@ -65,11 +62,25 @@ public class BbsDAO {
 		map.put("bname", bname);
 		
 		int cnt = sst.insert("bbs.add", map);
-		if (cnt > 0) {
-			sst.commit();
-		}else {
-			sst.rollback();
-		}
+//		if (cnt > 0) {
+//			sst.commit();
+//		}else {
+//			sst.rollback();
+//		}
+		
+		
+	}
+	
+	// 게시판 원글 저장하기 (vo로 받아서 하는 것임) ★★스프링이라 가능하다!!★★
+	public void add2(BbsVO vo) {
+		
+		
+		int cnt = sst.insert("bbs.add2", vo);
+//		if (cnt > 0) {
+//			sst.commit();
+//		}else {
+//			sst.rollback();
+//		}
 		
 		
 	}
@@ -103,12 +114,12 @@ public class BbsDAO {
 		
 		int cnt = sst.update("bbs.edit", map);
 		
-		if (cnt > 0) {
-			sst.commit();
-			value = true;
-		}else {
-			sst.rollback();
-		}
+//		if (cnt > 0) {
+//			sst.commit();
+//			value = true;
+//		}else {
+//			sst.rollback();
+//		}
 		
 		
 		return value;
@@ -120,11 +131,11 @@ public class BbsDAO {
 		
 		int cnt = sst.update("bbs.del", b_idx);
 		
-		if (cnt > 0) {
-			sst.commit();
-		}else {
-			sst.rollback();
-		}
+//		if (cnt > 0) {
+//			sst.commit();
+//		}else {
+//			sst.rollback();
+//		}
 		
 		
 	}

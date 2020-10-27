@@ -2,7 +2,11 @@ package mybatis.vo;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class BbsVO {
+	// 만약 vo로 파라미터를 받을 거면 jsp의 name과 같아야 한다.!!
+	
 	// 원글 게시판이 저장되는 bbs테이블의 각 레코들을 객체화시키는 클래스다.
 	// bname은 어떠한 게시판인지 알기 위해서
 	private String b_idx,      // 글 고유번호
@@ -16,10 +20,24 @@ public class BbsVO {
 					status,       // 회원이 게시글을 삭제할경우 실제로 지우지는 않고 삭제 되었는지 안 되었는지 확인 하기 위해만듦
 					bname;        // 게시판의 종류 (Q&A, 1:1게시판, 공지사항 등)
 	
+	// ↱ 파일 첨부한 것을 받을 수 있다.
+	private MultipartFile file; 
+	
+	
 	// ↱ 원글에 댓글이 여러게 작성 할수 있으므로 list로 만들어 놓는다. (1:N 관계) 댓글을 보는 것이므로 댓글vo인 CommVO를 사용
 	// ⎥ (bbs.xml의 commList에서 올거임) (mybatis에서 list로 주므로 반환형을 List로 해야함)
 	private List<CommVO> c_list;  // mapper에서 resultmap을 사용해서 갖고올거임
 	
+	
+	
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
 	public String getB_idx() {
 		return b_idx;

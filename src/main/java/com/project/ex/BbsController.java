@@ -28,6 +28,7 @@ public class BbsController {
 			bname ="BBS";
 		}
 		
+		// ↱총 게시물 수 구하기
 		int rowTotal = b_dao.totalCount(bname);
 		
 		// ↱현재 페이지 값인 cPage 파라미터 값이 넘어오지 않을 경우 무조건 1페이지임
@@ -39,10 +40,11 @@ public class BbsController {
 		Paging page = new Paging(c_page, rowTotal, blockList, blockPage); 
 		
 		
-		// 목록을 얻어내기.
+		// ↱게시판 목록을 배열로 얻어내기
 		BbsVO[] ar = b_dao.getList(page.getBegin(), page.getEnd(), bname);
 		
 		mv.addObject("ar", ar);
+		
 		mv.addObject("rowTotal", rowTotal);
 		mv.addObject("nowPage", c_page);
 		mv.addObject("p_code", page.getSb().toString());

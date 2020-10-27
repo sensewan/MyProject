@@ -50,5 +50,5 @@
 	<!-- ★★DAO★★ 만듦 -->
 	<!-- <bean id="memDao" class="mybatis.dao.MemDAO"/> -->
 	<!-- 여러 DAO들을 자동 적용  -> ~~DAO.java로 가서 DAO클래스 위에 @Component 추가해줘야 한다. -->
-	<context:component-scan base-package="mybatis.dao"/>	
+	<context:component-scan base-package="mybatis.dao"/>
 </beans>

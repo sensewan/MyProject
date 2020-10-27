@@ -43,6 +43,11 @@
 		values(bbs_seq.nextval, #{subject}, #{writer}, #{content}, #{file_name}, sysdate, #{ip}, 0, 0, #{bname})
 	</insert>
 	
+		<!-- 원글 vo로 이용해서 저장 하기 -->
+	<insert id="add2" parameterType="mybatis.vo.BbsVO">
+		insert into bbs(b_idx, subject, writer, content, file_name, write_date, ip, hit, status, bname)
+		values(bbs_seq.nextval, #{subject}, #{writer}, #{content}, #{file_name}, sysdate, #{ip}, 0, 0, #{bname})
+	</insert>
 	
 	<!-- 보기 기능 (resultMap으로 하지 않으면 댓글을 받아오지 못함) -->
 	<select id="getBbs" resultMap="map1" parameterType="String">

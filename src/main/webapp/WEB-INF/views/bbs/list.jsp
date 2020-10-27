@@ -54,29 +54,6 @@
 					</tr>
 				</thead>
 				
-				<tfoot>
-	                      <tr>
-	                          <td colspan="4">
-	                          	<!-- <ol class="paging"> -->
-	                          	${p_code }
-	                          </td>
-	                                  
-	               
-	<!--             작다는 표시 (아래것을 StringBuffer에 저장해 놓을거임) -->
-	<!-- <li><a href="#">&lt;</a></li>
-	
-		<li class="now">1</li>
-	         
-		<li><a href="#">2</a></li>
-	 
-			<li><a href="#">&gt;</a></li>	
-	                            </ol> -->
-	                              
-							  <td> 
-								<input type="button" value="글쓰기" onclick="javascript:location.href='Controller?type=write'"/>
-							  </td>
-	                      </tr>
-	                  </tfoot>
 				<tbody>
 				
 				<c:if test="${ar != null }">
@@ -106,7 +83,33 @@
 				</c:if>
 	
 				</tbody>
-			</table>
+
+				<tfoot>
+					<tr>
+						<td colspan="4">
+							<!-- <ol class="paging"> --> 
+							${p_code }
+						</td>
+
+
+						<!--                  ↱작다는 표시 (아래것을 StringBuffer에 저장해 놓을거임) -->
+						<!-- <li><a href="#">&lt;</a></li>
+
+							<li class="now">1</li>
+							        
+							<li><a href="#">2</a></li>
+							
+							<li><a href="#">&gt;</a></li>	
+	                        	</ol> -->
+
+						<td>
+							<!-- ↱ 비동기통신 하기 --> 
+							<input type="button" value="글쓰기" id="write_btn" />
+						</td>
+					</tr>
+				</tfoot>
+
+				</table>
 		</div> <!-- class="bbs_area" 끝-->
 	</div>
 	<!-- 콘텐츠 영역 끝-->
@@ -140,100 +143,28 @@
 
 <script type="text/javascript">
 
+$(function () {
 
-	$(function() {
-		// ↱ id가 login_btn인 요소 클릭 했을때 이벤트 발생
-		$("#login_btn").bind("click", function() {
-			var id = $("#s_id").val();
-			var pw = $("#s_pw").val();
-			
-			// ↱하나도 입력하지 않은 경우 및 공백만 입력한 경우.
-			if (id.trim().length < 1) {
-				alert("아이디 입력하시오.");
-				$("#s_id").val(""); //초기화
-				$("#s_id").focus();
-				return;
-			}
-			
-			if (pw.trim().length < 1) {
-				alert("아이디 입력하시오.");
-				$("#s_pw").val(""); //초기화
-				$("#s_pw").focus();
-				return;
-			}
-			
-			//console.log(id+"/"+pw);
-		
-			 $.ajax({
-				url: "login",
-				type: "post",
-				data: "m_id="+encodeURIComponent(id)+"&m_pw="+encodeURIComponent(pw),
-				dataType: "JSON"
-			}).done(function(data) {
-				if (data.res == "0") {
-					alert("아아디 비번 제대로 입력하시오!~");
-					//location.reload();
-				}else {
-					alert(data.mvo.m_name+"님 환영합니다. 처음화면으로 이동합니다.")
-					location.href="index";
-				}
-				
-			}).fail(function(err) {
-				console.log(err.statusText);
-			}); 
-		});
-	});  
-	
-	
-/* 	$(document).ready(function() {
-		$("#login_btn").on('click', function() {
-			loginChk();
-		})
-	});
-	
-	function loginChk() {
+	$("#write_btn").bind("click", function () {
+
 		$.ajax({
-			url: "loginChk",
-			type: "post",
-			data: {m_id:$("#s_id").val(), m_pw:$("#s_pw").val()},
-			dataType: "JSON"
+			url: "write",
+			dataType:"JSON"
+			
 		}).done(function(data) {
-			if (data.fa == "fail") {
-				alert(data.fa)
-				//location.reload();
-			}else {			
-				location.href = "index";
+			//console.log(data.chk);
+		 	if (data.chk == "0") {
+				alert("로그인 하셔야 합니다.");
+				//location.href="login";
+			}else if (data.chk =="1") {
+				location.href=data.url;
 			}
-		}).fail(function(err) {
-			console.log(err.statusText);
+		
 		});
+		
+	});
+});
 
-	} */
-	
-	
-	
-/* 	function exe() {
-		//var id = document.forms[0].id.value();
-		var id = document.getElementById("s_id").value;
-		var pw = document.getElementById("s_pw").value;
-		
-		if(id.length < 4){
-			alert("아이디를 4자리이상 입력하시오");
-			return;
-		}
-		
-		if (pw.length < 2) {
-			alert("비밀번호를 제대로 입력하시오");
-			return;
-		}
-		document.forms[0].submit();
-		
-		
-	} */
-
-
-	
-	
 </script>
 </body>
 </html>
