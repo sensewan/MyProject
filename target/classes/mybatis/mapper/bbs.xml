@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bbs">
+
+	<resultMap type="mybatis.vo.BbsVO" id="map1"> <!-- BbsVO를 하나씩 만들어서 여러개 일경우 list로 만들어서 호출한 DAO로 보냄 그 후 <collection> 수행 -->
+		<!-- id column은 절대로 중복이 안되는 primary key일경우에 쓴다. (그리고 다른 곳에서 또 쓰고 싶을 경우에도)  -->
+		<id column="b_idx" property="b_idx"/>  <!-- column은 전달되어 오는 값이고 property는 넘어온것을 BbsVO의 멤버 변수 b_idx에 저장하는것 -->
+		<!-- result column=""은 중복상관 없이 무조건 저장하는 경우에만 쓰임 -->
+		
+		<!-- 그리고 BbsVO의 c_list에다가 저장해 놓을것임 -> select id="commList"를 호출하는데 b_idx값을 가지고가 호출함 그리고 그 결과값을 CommVO형태로 c_lst에 넣음 -->
+		<collection property="c_list" select="commList" column="b_idx" ofType="mybatis.vo.CommVO"></collection>
+	</resultMap>
+
+
+	<!-- 특정 원글의 기본키를 조건으로 하여 -> 해당 댓글들을 조회하는 기능 -->
+	<select id="commList" parameterType="String" resultType="mybatis.vo.CommVO">
+		select * from comment_t
+		where b_idx = #{b_idx}
+	</select>
+
+
+	<!-- 사용자가 원글의 목록을 호출할 때 사용되는 목록 기능 -->
+	<select id="list" parameterType="java.util.Map" resultMap="map1">  <!-- 결과를 -> map1인 resultMap에다가 보냈다가 갖고옴 -->
+		select * from (
+			select rownum r_num, a.* from (
+				select * from bbs where status = 0 and bname =#{bname} order by b_idx desc) a) 
+				where r_num between #{begin} and #{end}
+	</select>
+	
+	
+	<!-- 페이징 기법에 사용될 전체페이지 수를 구하기 위해 현재 전체게시물의 수를 반환해야함 (즉 총 저장된 게시물 개수 나옴) -->
+	<select id="totalCount" resultType="int" parameterType="String">
+		select count(*) from bbs
+		where status = 0 and bname = #{bname}
+	</select>
+	
+	
+	<!-- 원글 저장 -->
+	<insert id="add" parameterType="java.util.Map">
+		insert into bbs(b_idx, subject, writer, content, file_name, write_date, ip, hit, status, bname)
+		values(bbs_seq.nextval, #{subject}, #{writer}, #{content}, #{file_name}, sysdate, #{ip}, 0, 0, #{bname})
+	</insert>
+	
+	
+	<!-- 보기 기능 (resultMap으로 하지 않으면 댓글을 받아오지 못함) -->
+	<select id="getBbs" resultMap="map1" parameterType="String">
+		select * from bbs where b_idx = #{b_idx}
+	</select>
+	
+	
+	<!-- 원글 수정 -->
+	<update id="edit" parameterType="java.util.Map">
+		update bbs set subject=#{subject}, content=#{content}
+		<if test="fname !=null">
+			,file_name = #{fname}
+		</if>
+		where b_idx = #{b_idx}
+	</update>
+	
+	
+	<!-- 원글 status 변경으로 삭제된것처럼 하기 -->
+	<update id="del" parameterType="String">
+		update bbs set status = 1 where b_idx = #{b_idx}
+	</update>
+</mapper>
+
+

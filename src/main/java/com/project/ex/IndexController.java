@@ -1,26 +1,11 @@
 package com.project.ex;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
-import mybatis.dao.MemDAO;
-import mybatis.vo.MemVO;
 
 @Controller
 public class IndexController {
 	
-	@Autowired
-	private MemDAO m_dao;
 
 	//                        ↱뒤에 아무것도 입력하지 않은 상태임 즉 프로젝트 실행하면 바로 실행됨
 	@RequestMapping(value = {"/", "/index"})
@@ -28,6 +13,7 @@ public class IndexController {
 		
 		return "index";   // views/index.jsp를 의미
 	}
+	
 	
 //	// ↱브라우저에서 /login이 입력될경우 실행됨 (즉 로그인 버튼 클릭했을 경우 -> login.jsp로 이동)
 //	@RequestMapping("/login")

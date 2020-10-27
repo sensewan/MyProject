@@ -30,7 +30,7 @@
 			<div class="txt_right">
 			 
 			<c:if test="${sessionScope.mvo == null}">
-			                 <!-- ↱IndexController.java로 이동함 -->			
+			                 <!-- ↱MemberController.java로 이동함 -->			
 				<span><a href="login">로그인</a></span>
 			</c:if>
 				
@@ -49,7 +49,7 @@
 				<li><a href=""><span class="menu m02">위드유</span></a></li>
 				<li><a href=""><span class="menu m03">스마트 전통시장</span></a></li>
 				<li><a href=""><span class="menu m04">BRAVO!</span></a></li>
-				<li><a href=""><span class="menu m05">SKT와 사회공헌</span></a></li>
+				<li><a href="bbs"><span class="menu m05">SKT와 사회공헌</span></a></li>
 				<li class="end"></li>
 			</ul>
 		</div>
