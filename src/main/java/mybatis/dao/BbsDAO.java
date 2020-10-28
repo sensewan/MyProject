@@ -114,13 +114,9 @@ public class BbsDAO {
 		
 		int cnt = sst.update("bbs.edit", map);
 		
-//		if (cnt > 0) {
-//			sst.commit();
-//			value = true;
-//		}else {
-//			sst.rollback();
-//		}
-		
+		if (cnt > 0) {
+			value = true;
+		}
 		
 		return value;
 		

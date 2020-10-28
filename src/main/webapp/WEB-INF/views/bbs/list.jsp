@@ -61,9 +61,9 @@
 					<tr>
 						<td>${rowTotal - st.index -(blockList*(nowPage - 1)) }</td>
 						<td style="text-align: left">
-						                                      <!-- ↱나중에 뒤로 가기 눌렀을 때 필요-->
-							<a href="Controller?type=view&cPage=${nowPage }&b_idx=${aa.b_idx}">
-						${aa.subject }                                           <!-- ↳ 클릭한 게시물을 보여주기 위해 필요 -->
+						                         <!-- ↱나중에 뒤로 가기 눌렀을 때 필요-->
+							<a href="view?cPage=${nowPage }&b_idx=${aa.b_idx}">
+						${aa.subject }                            <!-- ↳ 클릭한 게시물을 보여주기 위해 필요 -->
 						</a></td>
 						<td>${aa.writer }</td>
 						<td>

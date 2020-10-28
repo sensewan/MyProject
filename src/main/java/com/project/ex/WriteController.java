@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import mybatis.dao.BbsDAO;
 import mybatis.vo.BbsVO;
 import mybatis.vo.MemVO;
+import spring.util.FileUploadUtil;
 
 @Controller
 public class WriteController {
@@ -81,7 +82,7 @@ public class WriteController {
 	@RequestMapping("/write_ok")          // ↱ new File() 때문에 하는것임 (io이용이므로 예외처리 해야함)
 	public ModelAndView writeOK(BbsVO vo) throws Exception {
 		                      // ↳ ★★wirte.jsp에서 전달되는 폼의 값들 -> (bname, subject, content, file) 을
-		                      // 멤버변수로 가지고 있는 ★★BbsVO★★로 모두 받을 거임  
+		                      // 멤버변수로 가지고 있는 ★★BbsVO★★로 모두 받을 거임 (즉 넘어오는 이름이랑 VO변수 이름이 같아야함)
 		                      // (단 파일 첨부인 경우에는 VO에 MultipartFile 로 선언해줘야함)
 		
 //		System.out.println(vo.getSubject());
@@ -100,7 +101,8 @@ public class WriteController {
 			// ↱파일명 얻기
 			String f_name = mf.getOriginalFilename();
 			
-			// ↱동일한 파일명이 있을 수 있으므로 변경하기!~ (내일 할거임)
+			// ↱동일한 파일명이 있을 수 있으므로 변경하기!~ 
+			f_name = FileUploadUtil.checkSameFileName(f_name, path);
 			
 			
 			// ↱ 업로드 진행!!~    ↱경로, ↱파일이름
