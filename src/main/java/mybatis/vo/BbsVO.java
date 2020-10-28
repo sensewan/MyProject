@@ -23,6 +23,8 @@ public class BbsVO {
 	// ↱ 파일 첨부한 것을 받을 수 있다.
 	private MultipartFile file; 
 	
+	private int cPage;
+	
 	
 	// ↱ 원글에 댓글이 여러게 작성 할수 있으므로 list로 만들어 놓는다. (1:N 관계) 댓글을 보는 것이므로 댓글vo인 CommVO를 사용
 	// ⎥ (bbs.xml의 commList에서 올거임) (mybatis에서 list로 주므로 반환형을 List로 해야함)
@@ -30,6 +32,15 @@ public class BbsVO {
 	
 	
 	
+
+
+	public int getcPage() {
+		return cPage;
+	}
+
+	public void setcPage(int cPage) {
+		this.cPage = cPage;
+	}
 
 	public MultipartFile getFile() {
 		return file;

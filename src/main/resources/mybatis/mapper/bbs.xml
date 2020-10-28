@@ -55,8 +55,17 @@
 	</select>
 	
 	
-	<!-- 원글 수정 -->
-	<update id="edit" parameterType="java.util.Map">
+	<!-- 원글 수정1 -->
+	<update id="edit" parameterType="mybatis.vo.BbsVO">
+		update bbs set subject=#{subject}, content=#{content}
+		<if test="file_name !=null">
+			,file_name = #{file_name}
+		</if>
+		where b_idx = #{b_idx}
+	</update>
+	
+	<!-- 원글 수정 2-->
+	<update id="edit2" parameterType="java.util.Map">
 		update bbs set subject=#{subject}, content=#{content}
 		<if test="fname !=null">
 			,file_name = #{fname}
@@ -65,10 +74,20 @@
 	</update>
 	
 	
+	
 	<!-- 원글 status 변경으로 삭제된것처럼 하기 -->
 	<update id="del" parameterType="String">
 		update bbs set status = 1 where b_idx = #{b_idx}
 	</update>
+	
+	
+	<!-- 조회수 증가하기 -->
+	<update id="update_hit" parameterType="String">
+		update bbs set hit = hit + 1 where b_idx = #{b_idx}
+	</update>
+	
+	
+	
 </mapper>
 
 

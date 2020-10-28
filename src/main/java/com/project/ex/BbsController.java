@@ -22,7 +22,7 @@ public class BbsController {
 	@RequestMapping("/bbs")
 	public ModelAndView bbs(String bname, String cPage) {
 		                    // ↳이렇게 하면 그냥 인자 넘어옴 즉 getParameter 안해도 됨, get도 안해도됨 (만약 없으면 그냥 null)
-		ModelAndView mv = new ModelAndView();   // cf.mv는 request에 있음... (requestScope 사용가능)
+		ModelAndView mv = new ModelAndView();   // cf.mv는 ★★ request ★★에 있음... (requestScope 사용가능)
 		
 		if(bname == null) {
 			bname ="BBS";

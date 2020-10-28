@@ -61,10 +61,9 @@
 					<tr>
 						<td>${rowTotal - st.index -(blockList*(nowPage - 1)) }</td>
 						<td style="text-align: left">
-						                         <!-- ↱나중에 뒤로 가기 눌렀을 때 필요-->
-							<a href="view?cPage=${nowPage }&b_idx=${aa.b_idx}">
-						${aa.subject }                            <!-- ↳ 클릭한 게시물을 보여주기 위해 필요 -->
-						</a></td>
+						                <!-- ↱나중에 뒤로가기 or 목록 눌렀을 때 클릭하기 전 페이지로 돌아가기 위해 필요-->
+							<a href="view?cPage=${nowPage }&b_idx=${aa.b_idx}"> ${aa.subject }</a></td>
+						                                 <!-- ↳ 클릭한 게시물을 보여주기 위해 필요 -->
 						<td>${aa.writer }</td>
 						<td>
 						<c:if test="${aa.write_date ne null }">

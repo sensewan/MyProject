@@ -29,17 +29,19 @@ public class WriteController {
 	@Autowired
 	private HttpSession session;
 	
-	// 절대 경로 얻기위해
+	// ↱ip얻기
+	@Autowired
+	private HttpServletRequest request;
+		
+	// ↱절대 경로 얻기
 	@Autowired
 	private ServletContext application;
 	
-	// ip얻기 위
-	@Autowired
-	private HttpServletRequest request;
-	
-	
+		
 	// ↱ 첨부파일이 저장될 위치 만들기
 	private String uploadPath = "/resources/upload";
+	
+	
 	
 	@RequestMapping("/write")
 	@ResponseBody
@@ -82,13 +84,9 @@ public class WriteController {
 	@RequestMapping("/write_ok")          // ↱ new File() 때문에 하는것임 (io이용이므로 예외처리 해야함)
 	public ModelAndView writeOK(BbsVO vo) throws Exception {
 		                      // ↳ ★★wirte.jsp에서 전달되는 폼의 값들 -> (bname, subject, content, file) 을
-		                      // 멤버변수로 가지고 있는 ★★BbsVO★★로 모두 받을 거임 (즉 넘어오는 이름이랑 VO변수 이름이 같아야함)
-		                      // (단 파일 첨부인 경우에는 VO에 MultipartFile 로 선언해줘야함)
+		                      // 멤버변수로 가지고 있는 ★★BbsVO★★로 모두 받는다.(스프링이라 자동으로 들어감) 
+		                      // (즉 넘어오는 이름이랑 VO변수 이름이 같아야함) (단! 파일 첨부인 경우에는 VO에 MultipartFile 로 선언해줘야함)
 		
-//		System.out.println(vo.getSubject());
-//		System.out.println(vo.getContent());
-//		System.out.println(vo.getBname());
-//		System.out.println(vo.getFile().getName());
 		
 		ModelAndView mv = new ModelAndView();
 
@@ -101,7 +99,7 @@ public class WriteController {
 			// ↱파일명 얻기
 			String f_name = mf.getOriginalFilename();
 			
-			// ↱동일한 파일명이 있을 수 있으므로 변경하기!~ 
+			// ↱ ★★동일한 파일명이★★ 있을 수 있으므로 변경하기!~ 
 			f_name = FileUploadUtil.checkSameFileName(f_name, path);
 			
 			
@@ -123,8 +121,8 @@ public class WriteController {
 		b_dao.add2(vo);
 		
 		
-		// ↱ 저장하고 리스트 페이지로 갈려면 BbsController로 가야함 (왜냐면 리스트에 뿌려줄 자료를 갖고가야 하므로!!~)
-		mv.setViewName("redirect:/bbs");
+		// ↱ 저장하고 리스트 페이지로 갈려면 BbsController로 가야함 
+		mv.setViewName("redirect:/bbs");  // reDirect로 가는 이유는 게시판 글 저장하고 새로운 글 목록을 보여주기 위함.
 		
 		return mv;
 	}

@@ -96,23 +96,13 @@ public class BbsDAO {
 	
 	
 	// 글 수정하기
-	public boolean editBbs(String b_idx, String subject, String content, String fname, String ip) {
+	public boolean editBbs(BbsVO vo) {
 		
 		boolean value = false;
 		
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("b_idx", b_idx);
-		map.put("subject", subject);
-		map.put("content", content);
-		
 		// 파일첨부 되었을 때만 파일명을 DB에 저장할거임 / 만약 첨부된 파일이 없다면 -> 기존 파일을 유지할거임
 		
-		if (fname != null && fname.trim().length() > 0) {
-			map.put("fname", fname);
-		}
-		
-		
-		int cnt = sst.update("bbs.edit", map);
+		int cnt = sst.update("bbs.edit", vo);
 		
 		if (cnt > 0) {
 			value = true;
@@ -122,8 +112,9 @@ public class BbsDAO {
 		
 	}
 	
+	
+	// 삭제하기
 	public void delBbs(String b_idx) {
-		
 		
 		int cnt = sst.update("bbs.del", b_idx);
 		
@@ -133,14 +124,24 @@ public class BbsDAO {
 //			sst.rollback();
 //		}
 		
+	}
+	
+	
+	// 조회수 증가하기
+	public boolean updateHit(String b_idx) {
+		int cnt = sst.update("bbs.update_hit", b_idx);
 		
+		if (cnt > 0) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	
 	
 	
 }
-
 
 
 

@@ -4,19 +4,10 @@ import java.io.File;
 
 // 일반적인 클래스를 선언한거임..
 public class FileUploadUtil {
-
-	// static을 선언함으로써 
-	// cf. static으로 메소드를 사용할 경우 멤버 변수 또한 static이어야 한다!!!!!!!.
-//	private static String msg;
-//	public static getMsg() {
-//		return msg;
-//	}
-	
 	
 	public static String checkSameFileName(String filename, String path) {
 
-		// 인자인 filename에서 확장자를 뺀 파일명을 알아내기!
-		// 그렇게 하려면 먼저 파일명에 있는 "."의 위치를 알아내자.
+		// ↱인자인 filename에서 확장자를 뺀 파일명을 알아내기 위해 -> 파일명에 있는 "."의 위치를 알아내자.
 		int period = filename.lastIndexOf(".");
 		
 		// ↱파일명과 확장자를 분리하여 -> 파일명만 얻기	
