@@ -142,6 +142,16 @@ href="css/bbs.css"/>
 		document.frm.submit();
 	}
 	
+	function fDown(fname) {
+		
+		// ↱FileDownload 서블릿 호출하기!
+		location.href="FileDownload?dir=/resources/upload&filename="+encodeURIComponent(fname);
+		
+		// get방식 한글처리를 하기 위해서는-> 톰켓의 server.xml에서 
+		// <Connector port="8080" protocol="HTTP/1.1" ~~~> 이태그 찾아서 URIEncoding="UTF-8" 추가해야함
+		// <Connector port="8009" protocol="AJP/1.3" ~~~> 이태그 찾아서 URIEncoding="UTF-8" 추가해야함 (근데 지금 주석처리 되어있음...)
+	}
+	
 </script>
 </body>
 </html>

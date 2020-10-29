@@ -20,7 +20,7 @@ public class BbsVO {
 					status,       // 회원이 게시글을 삭제할경우 실제로 지우지는 않고 삭제 되었는지 안 되었는지 확인 하기 위해만듦
 					bname;        // 게시판의 종류 (Q&A, 1:1게시판, 공지사항 등)
 	
-	// ↱ 파일 첨부한 것을 받을 수 있다.
+	// ↱ 파일 첨부한 것을 받을 수 있다.(★★servlet-context.xml★★ 에 추가해 놓았기 때문에 가능한 것이다!!)
 	private MultipartFile file; 
 	
 	private int cPage;
