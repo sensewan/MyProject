@@ -114,7 +114,7 @@ public class BbsDAO {
 	
 	
 	// 삭제하기
-	public void delBbs(String b_idx) {
+	public int delBbs(String b_idx) {
 		
 		int cnt = sst.update("bbs.del", b_idx);
 		
@@ -123,7 +123,7 @@ public class BbsDAO {
 //		}else {
 //			sst.rollback();
 //		}
-		
+		return cnt;
 	}
 	
 	

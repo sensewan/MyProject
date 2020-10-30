@@ -142,14 +142,33 @@ href="css/bbs.css"/>
 		document.frm.submit();
 	}
 	
+	              // ↱ 파일네임을 인자로 받음 "javascript:fDown('${vo.file_name }')"
 	function fDown(fname) {
 		
-		// ↱FileDownload 서블릿 호출하기!
+		// ↱FileDownload 서블릿 호출하기!                    ↱ 파일네임 넣어주기
 		location.href="FileDownload?dir=/resources/upload&filename="+encodeURIComponent(fname);
+		                          // ↳다운로드할 주소 넣어주기
 		
 		// get방식 한글처리를 하기 위해서는-> 톰켓의 server.xml에서 
 		// <Connector port="8080" protocol="HTTP/1.1" ~~~> 이태그 찾아서 URIEncoding="UTF-8" 추가해야함
 		// <Connector port="8009" protocol="AJP/1.3" ~~~> 이태그 찾아서 URIEncoding="UTF-8" 추가해야함 (근데 지금 주석처리 되어있음...)
+	}
+	
+	
+	function delBbs() {
+		var idx = ${vo.b_idx};
+		
+		$.ajax({
+			url: "dell",
+			type: "get",
+			data: "b_idx="+encodeURIComponent(idx),
+			dataType: "JSON"
+		}).done(function(data) {
+			alert(data.res);
+			location.href=data.url+"?cPage=${param.cPage}";
+		});
+				
+		//location.href="dell?b_idx=${vo.b_idx}";
 	}
 	
 </script>

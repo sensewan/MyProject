@@ -16,7 +16,7 @@ public class FileUploadUtil {
 		// ↱확장자 얻음 (예: .jpeg)
 		String suffix = filename.substring(period);
 		
-		// ↱전체경로 + \파일명 넣기     ↱파일 구분자 넣어줌      /이렇게 하는 이유는 같은이름의 파일네임이 있을경우 파일네임 변경할려고.
+		// ↱전체경로 + \파일명 넣기     ↱파일 구분자 넣어줌      이렇게 하는 이유는 같은이름의 파일네임이 있을경우 파일네임 변경할려고.
 		String saveFile = path + System.getProperty("file.separator")+ filename;
 		
 		
@@ -29,7 +29,9 @@ public class FileUploadUtil {
 			//파일명 뒤에 숫자를 붙여 파일명을 변경한다.
 			StringBuffer sb = new StringBuffer();
 			sb.append(f_name);
+			sb.append("(");
 			sb.append(idx++);
+			sb.append(")");
 			sb.append(suffix);
 			
 			filename=sb.toString(); // 변경한 파일이름
