@@ -13,7 +13,7 @@
 <title>login</title>
 <link type="text/css" rel="stylesheet" href="css/common.css"/>
 <link type="text/css" rel="stylesheet" href="css/login.css"/>
-<link type="text/css" rel="stylesheet" href="css/bbs.css"/>
+<link type="text/css" rel="stylesheet" href="css/goData.css"/>
 <link rel="stylesheet" href="css/summernote-lite.min.css"/>
 
 
@@ -45,7 +45,7 @@
 				<!-- <input type="hidden" name="type" value="write"/> -->
 				<!--   ↳위에 input hidden은 multipart라 request.getParameter으로 못받음 Controller로 전달 하지 못하므로 의미가 없음 -->
 				
-				<input type="hidden" name="bname" value="BBS"/>
+				<input type="hidden" name="bname" value="${param.bname }"/>
 				<input type="hidden" name="cPage" value="${param.cPage }">
 				<!-- ↱ ViewController에서 bvo를 session에 저장함 현재 session에 bvo가 저장 되어있음 -->
 				<input type="hidden" name="b_idx" value="${sessionScope.bvo.b_idx }"> 

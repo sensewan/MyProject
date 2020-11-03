@@ -16,17 +16,21 @@ public class Paging {
 	private boolean isNextPage;  // 다음페이지로 갈 수 있는지 확인여부
 	
 	
+	// ↱페이징 이동, 글쓰기, 수정 등에 사용하기 위해 내가 만듦(MarketController 안 만들기 위함)
+	private String bname;
+
 	// ↱JSP에서 표현할 페이징 HTML코드를 저장할 곳. (이전으로 다음으로 보이는 기능)
 	private StringBuffer sb;
 
 
 	// ↱기본 필요한 것들 생성자를 통해 저장하기 (현재페이지, 총게시물 수, 한 페이지에 표현할 게시물 수, 한 블럭당 표현할 페이지번호 수)
-	public Paging(int nowPage, int rowTotal, int blockList, int blockPage) {
+	public Paging(int nowPage, int rowTotal, int blockList, int blockPage, String bname) {
 		super();
 		this.nowPage = nowPage;
 		this.rowTotal = rowTotal;
 		this.blockList = blockList;
 		this.blockPage = blockPage;
+		this.bname = bname;
 		
 		// 이전기능과 다음기능을 초기화 한다.
 		isPrePage = isNextPage = false;  // 이렇게 써도 되긴함...
@@ -102,7 +106,7 @@ public class Paging {
 			}else {
 				sb.append("<li><a href='bbs?cPage=");
 				sb.append(i);
-				sb.append("'>");
+				sb.append("&bname="+bname+"'>");  // 이만큼 내가 추가한것 "&bname="+bname+
 				sb.append(i);  //위에 i는 표시가 안되므로 다시 한번적어줘야 함
 				sb.append("</a></li>");
 			}
@@ -129,6 +133,13 @@ public class Paging {
 		
 	}
 
+	public String getBname() {
+		return bname;
+	}
+
+	public void setBname(String bname) {
+		this.bname = bname;
+	}
 
 	public int getNowPage() {
 		return nowPage;

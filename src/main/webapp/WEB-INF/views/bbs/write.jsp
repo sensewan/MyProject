@@ -45,7 +45,7 @@
 				<!-- <input type="hidden" name="type" value="write"/> -->
 				<!--   ↳위에 input hidden은 multipart라 request.getParameter으로 못받음 Controller로 전달 하지 못하므로 의미가 없음 -->
 				
-				<input type="hidden" name="bname" value="BBS"/>
+				<input type="hidden" name="bname" value="${param.bname }"/>
 				<table summary="게시판 글쓰기">
 					<caption>게시판 글쓰기</caption>
 					<tbody>
@@ -61,9 +61,13 @@
 							<th>내용:</th>
 							<td><textarea name="content" id="content" cols="50" rows="8"></textarea></td>
 						</tr>
-					 	<tr>
+ 					 	<tr>
 							<th>첨부파일:</th>
-							<td><input type="file" name="file"/></td>
+							<td><input id="m_img" type="file" name="file"/></td>
+						</tr>
+						<tr>
+							<th>첨부된 이미지:</th>
+							<td class="select_img"><img src=""></td>
 						</tr>
 
 						<tr>
@@ -124,7 +128,21 @@
 	
 		document.forms[0].submit();
 	}
-/* 	
+	
+ 	
+	// ↱ 파일 첨부할 경우 이미지 바로 보이게 하기.
+  	$("#m_img").change(function(){
+		if(this.files && this.files[0]) {
+			var reader = new FileReader;
+			reader.onload = function(data) {
+				$(".select_img img").attr("src", data.target.result).width(500);
+			}
+			reader.readAsDataURL(this.files[0]);
+		}
+	});
+
+	  
+/*   	
 	$(function () {
 		$("#content").summernote({
 			height:300,
@@ -161,13 +179,13 @@
 			dataType:"json",
 			
 		}).done(function(res) { //성공시 (이미지 주소를 content에 넣어주기)
-			//console.log(res.img_url);
-		    // ┌> jQuery로 img 태그 만듦
-			//var image = $("<img>").attr("src", res.img_url);  // <-img태그 생성됨
-		    //                        └>속성 부여
-		    // ┌>html id가 content인 내용안에 넣어주기 
-		    //$("#content").summernote("insertNode", image[0]);
-		    //                           └>(insertNode를 적으면<textarea rows="12" cols="50" id="content" name="content">!!insertNode!!열로 들어감</textarea>)
+			console.log(res.img_url);
+		     //┌> jQuery로 img 태그 만듦
+			var image = $("<img>").attr("src", res.img_url);  // <-img태그 생성됨
+		                           //└>속성 부여
+		     //┌>html id가 content인 내용안에 넣어주기 
+		    $("#content").summernote("insertNode", image[0]);
+		                               //└>(insertNode를 적으면<textarea rows="12" cols="50" id="content" name="content">!!insertNode!!열로 들어감</textarea>)
 		    
 		    
 		    //                            ┌>img 태그를 알아서 만들어서 넣어줌
@@ -176,9 +194,9 @@
 		}).fail(function(err) { //실패시
 			console.log(err);
 		})
-	} */
-
-	
+	} 
+ */
+	 
 	
 </script>
 </body>

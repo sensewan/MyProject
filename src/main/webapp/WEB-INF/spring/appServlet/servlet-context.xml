@@ -44,5 +44,18 @@
 	<context:component-scan base-package="com.project.ex" />
 	
 	
+	<!-- 인터셉터 적용하기!! -->
+	<beans:bean id="log_in" class="spring.interceptor.LoginInterceptor"></beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/bbs/*"/> <!-- bbs로 거치는 모든 것에 적용됨 -->
+			<mapping path="/goData"/> <!-- goData로 가면 적용됨 -->
+			<beans:ref bean="log_in"/>  <!-- 위에 beans 적용 -->
+		</interceptor>
+	</interceptors>
+	
 	
 </beans:beans>
+
+

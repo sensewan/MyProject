@@ -65,29 +65,29 @@ public class WriteController {
 	
 	
 	@RequestMapping("/writeForm")
-	public String writeForm() {
+	public ModelAndView writeForm(String bname) {
+		ModelAndView mv = new ModelAndView();
+		
 		MemVO mvo = (MemVO)session.getAttribute("mvo");
+		//System.out.println("제발나와라 "+bname);
 		
-		String viewPath = null;
-		
-		// ↱ 굳이 또 로그인 확인을 하는 이유는 누군가 /writeForm 주소를 알아내서 들어올수 있기 때문
 		if (mvo != null) {
-			viewPath = "bbs/write";
+			mv.addObject("bname", bname);
+			mv.setViewName("bbs/write");
 		}else {
-			viewPath = "login";
+			mv.setViewName("login");
 		}
 		
-		return viewPath;
+		return mv;
 	}
+	
 	
 	
 	@RequestMapping("/write_ok")          // ↱ new File() 때문에 하는것임 (io이용이므로 예외처리 해야함)
 	public ModelAndView writeOK(BbsVO vo) throws Exception {
-		                      // ↳ ★★wirte.jsp에서 전달되는 폼의 값들 -> (bname, subject, content, file) 을
-		                      // 멤버변수로 가지고 있는 ★★BbsVO★★로 모두 받는다.(스프링이라 자동으로 들어감) 
-		                      // (즉 넘어오는 이름이랑 VO변수 이름이 같아야함) (단! 파일 첨부인 경우에는 VO에 MultipartFile 로 선언해줘야함)
-		
-		
+								// ↳ ★★wirte.jsp에서 전달되는 폼의 값들 -> (bname, subject, content, file) 을
+						        // 멤버변수로 가지고 있는 ★★BbsVO★★로 모두 받는다.(스프링이라 자동으로 들어감) 
+						        // (즉 넘어오는 이름이랑 VO변수 이름이 같아야함) (단! 파일 첨부인 경우에는 VO에 MultipartFile 로 선언해줘야함)
 		ModelAndView mv = new ModelAndView();
 
 		// ↱ 첨부된 파일이 있는지? 없는지? 확인하기.
@@ -121,12 +121,12 @@ public class WriteController {
 		b_dao.add2(vo);
 		
 		
-		// ↱ 저장하고 리스트 페이지로 갈려면 BbsController로 가야함 
-		mv.setViewName("redirect:/bbs");  // reDirect로 가는 이유는 게시판 글 저장하고 새로운 글 목록을 보여주기 위함.
+		// ↱ 저장하고 bname에 맞는 Controller로 가서 리스트페이지로 간다.
+		mv.setViewName("redirect:/bbs?bname="+vo.getBname());  // reDirect로 가는 이유는 게시판 글 저장하고 새로운 글 목록을 보여주기 위함.
 		
-		return mv;
+		return mv;	
 	}
 	
-	
+
 	
 }

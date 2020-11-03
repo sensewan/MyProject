@@ -31,7 +31,7 @@
 			<li><a href="goData"><span class="menu m02">위드유</span></a></li>
 			<li><a href="bbs?bname=market"><span class="menu m03">스마트 전통시장</span></a></li>
 			<li><a href=""><span class="menu m04">BRAVO!</span></a></li>
-			<li><a href="bbs?bname=BBS"><span class="menu m05">SKT와 사회공헌</span></a></li>
+			<li><a href="bbs"><span class="menu m05">SKT와 사회공헌</span></a></li>
 		</ul>
 	</div>
 	<!-- 상단 영역 끝 -->
@@ -39,7 +39,7 @@
 	<!-- 콘텐츠 영역 -->
 	<div id="contents_sub">
 	
-		<h1 style="font-size: 30px; color: #000; margin-bottom: 20px;">SKT와 사회공헌</h1>
+		<h1 style="font-size: 30px; color: #000; margin-bottom: 20px;">스마트 전통시장</h1>
 		
 		<div class="bbs_area" id="bbs">
 			<table summary="게시판 목록">
@@ -47,6 +47,7 @@
 				<thead>
 					<tr class="title">
 						<th class="no">번호</th>
+						<th class="sum" style="width: 60px;">썸네일</th>
 						<th class="subject">제목</th>
 						<th class="writer">글쓴이</th>
 						<th class="reg">날짜</th>
@@ -60,6 +61,7 @@
 					<c:forEach var ="aa" items="${requestScope.ar }" varStatus="st">
 					<tr>
 						<td>${rowTotal - st.index -(blockList*(nowPage - 1)) }</td>
+						<td><a href="view?cPage=${nowPage }&b_idx=${aa.b_idx}"><img src="upload/${aa.file_name }" width="50"></a></td>
 						<td style="text-align: left">
 						                <!-- ↱나중에 뒤로가기 or 목록 눌렀을 때 클릭하기 전 페이지로 돌아가기 위해 필요-->
 							<a href="view?cPage=${nowPage }&b_idx=${aa.b_idx}"> ${aa.subject }</a></td>
@@ -85,7 +87,7 @@
 
 				<tfoot>
 					<tr>
-						<td colspan="4">
+						<td colspan="5">
 							<!-- <ol class="paging"> --> 
 							${p_code }
 						</td>

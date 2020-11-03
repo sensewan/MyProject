@@ -26,15 +26,15 @@ href="css/bbs.css"/>
 		<ul class="gnb">
 			<li><a href=""><span class="menu m01">기브유</span></a></li>
 			<li><a href="goData"><span class="menu m02">위드유</span></a></li>
-			<li><a href="bbs?bnmae=market"><span class="menu m03">스마트 전통시장</span></a></li>
+			<li><a href="javascript:goBack()"><span class="menu m03">스마트 전통시장</span></a></li>
 			<li><a href=""><span class="menu m04">BRAVO!</span></a></li>
-			<li><a href="javascript:goBack()"><span class="menu m05">SKT와 사회공헌</span></a></li>
+			<li><a href="bbs"><span class="menu m05">SKT와 사회공헌</span></a></li>
 		</ul>
 	</div>
 	<!-- 상단 영역 끝 -->
 	<!-- 콘텐츠 영역 -->
 	<div id="contents_sub">
-		<h1 style="font-size: 30px; color: #000; margin-bottom: 20px;">사회공헌 보기</h1>
+		<h1 style="font-size: 30px; color: #000; margin-bottom: 20px;">장터세상</h1>
 		<div class="bbs_area" id="bbs">
 			<form method="post" name="frm">
 				<!-- ↱ action을 통해 이동할 때 값을 갖고 가기 위해 만듦 -->
@@ -46,7 +46,12 @@ href="css/bbs.css"/>
 				
 				<table summary="게시판 글쓰기">
 					<caption>게시판 글쓰기</caption>
+					
 					<tbody>
+						<tr style="width: 200px; height: 200px;">
+							<td rowspan="5"><img src="upload/${vo.file_name }" width="200" /></td>
+							<%-- <td>${path }/${vo.file_name }</td> --%>
+						</tr>
 						<tr>
 							<th>제목:</th>
 							<td>${vo.subject }</td>
@@ -65,18 +70,23 @@ href="css/bbs.css"/>
 							<th>이름:</th>
 							<td>${vo.writer }</td>
 						</tr>
+						
 						<tr>
-							<th>내용:</th>
-							<td>${vo.content }</td>
+							<th>조회수:</th>
+							<td>${vo.hit }</td>
 						</tr>
 						
-						<tr style="width: 200px; height: 200px;">
+						<tr>
+							<td colspan="3" style="height: 200px;">${vo.content }</td>
+						</tr>
+<%-- 						<tr style="width: 200px; height: 200px;">
 							<th>이미지:</th>
-							<td><img src="upload/${vo.file_name }" width="200"/></td>
-						</tr>
+							<td><img src="upload/${vo.file_name }" width="200" /></td>
+							<td>${path }/${vo.file_name }</td>
+						</tr> --%>
 						
 						<tr>
-							<td colspan="2">
+							<td colspan="3">
 							<!-- ↱ 글작성자만 수정과 삭제가 보이게 하기 / MemberController에서 ★로그인 정보인 mvo를 session에 저장해 놓음★ -->
 							<c:if test="${mvo.m_name == vo.writer }">
 								<input type="button" value="수정" onclick="editBbs()"/>
@@ -136,14 +146,13 @@ href="css/bbs.css"/>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script>
 
-
 	function goBack() {
 		                  // ↱ ViewController에서 받은 인자 사용가능 -> 왜냐면 기본적으로 포워드로 이동한 것이므로 가능함
-		location.href="bbs?cPage=${param.cPage}"
+		location.href="bbs?bname=${vo.bname}&cPage=${param.cPage}"
 	}
-	
+
 	function editBbs() {
-		document.frm.action ="edit?cPage=${param.cPage}";   // cf. sendRedirect임
+		document.frm.action ="edit?cPage=${param.cPage}&bname=${vo.bname}";   // cf. sendRedirect임
 		                         // ↳위에 input hidden으로 넣어줘 이거는 ?cPage=${param.cPage} 없어도 될듯...
 		document.frm.submit();
 	}
@@ -163,7 +172,7 @@ href="css/bbs.css"/>
 	
 	function delBbs() {
 		var idx = ${vo.b_idx};
-	
+		
 		$.ajax({
 			url: "dell",
 			type: "get",

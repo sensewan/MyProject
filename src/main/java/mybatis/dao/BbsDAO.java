@@ -13,6 +13,7 @@ import mybatis.vo.BbsVO;
 @Component
 public class BbsDAO {
 	
+
 	@Autowired
 	private SqlSessionTemplate sst;
 	
@@ -36,7 +37,8 @@ public class BbsDAO {
 			list.toArray(ar);
 		}
 
-		return ar;	
+		return ar;
+		
 	}
 	
 	
@@ -45,13 +47,14 @@ public class BbsDAO {
 		
 		int cnt = sst.selectOne("bbs.totalCount", bname);
 		
+
+		
 		return cnt;
 	}
 	
 	
 	// 게시판 원글 저장하기
 	public void add(String subject, String writer, String content, String fname, String ip, String bname) {
-		
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("subject", subject);
@@ -100,7 +103,6 @@ public class BbsDAO {
 		
 		boolean value = false;
 		
-		// 파일첨부 되었을 때만 파일명을 DB에 저장할거임 / 만약 첨부된 파일이 없다면 -> 기존 파일을 유지할거임
 		
 		int cnt = sst.update("bbs.edit", vo);
 		
@@ -112,9 +114,8 @@ public class BbsDAO {
 		
 	}
 	
-	
-	// 삭제하기
 	public int delBbs(String b_idx) {
+		
 		
 		int cnt = sst.update("bbs.del", b_idx);
 		
@@ -123,9 +124,10 @@ public class BbsDAO {
 //		}else {
 //			sst.rollback();
 //		}
+		
 		return cnt;
+		
 	}
-	
 	
 	// 조회수 증가하기
 	public boolean updateHit(String b_idx) {
@@ -137,7 +139,6 @@ public class BbsDAO {
 			return false;
 		}
 	}
-	
 	
 	
 	

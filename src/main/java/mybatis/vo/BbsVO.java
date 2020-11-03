@@ -25,7 +25,11 @@ public class BbsVO {
 	
 	private int cPage;
 	
+	// ↱ 썸네일 이미지 저장. (내가추가..사용가능한지 모름)
+	private String thum_img;
 	
+	
+
 	// ↱ 원글에 댓글이 여러게 작성 할수 있으므로 list로 만들어 놓는다. (1:N 관계) 댓글을 보는 것이므로 댓글vo인 CommVO를 사용
 	// ⎥ (bbs.xml의 commList에서 올거임) (mybatis에서 list로 주므로 반환형을 List로 해야함)
 	private List<CommVO> c_list;  // mapper에서 resultmap을 사용해서 갖고올거임
@@ -33,6 +37,13 @@ public class BbsVO {
 	
 	
 
+	public String getThum_img() {
+		return thum_img;
+	}
+	
+	public void setThum_img(String thum_img) {
+		this.thum_img = thum_img;
+	}
 
 	public int getcPage() {
 		return cPage;

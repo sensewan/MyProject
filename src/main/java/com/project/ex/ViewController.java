@@ -41,8 +41,8 @@ public class ViewController {
 	
 	@RequestMapping("/view")
 	public ModelAndView view(String cPage, String b_idx) {
-		                    // ↳ 나중에 뒤로가기 or 목록 눌렀을 때 클릭하기 전 페이지로 돌아가기 위해 필요
-		                    //   list.jsp에서 파라미터 값으로 넘어옴
+        						// ↳ 나중에 뒤로가기 or 목록 눌렀을 때 클릭하기 전 페이지로 돌아가기 위해 필요
+								//   list.jsp에서 파라미터 값으로 넘어옴
 		
 		// ★★조회수★★ 만들기!!~
 		// 한 번 본 게시물(BbsVO)인 경우에는 -> "List<BbsVO> v_list" 를 만들어 여기에 저장해 놓기.
@@ -58,7 +58,8 @@ public class ViewController {
 			session.setAttribute("view_list", v_list);
 			
 		}else {  // sesseion에 "view_list"가 저장된 경우 임. 즉 게시물을 1번 이상 본경우임
-			v_list = (List<BbsVO>) obj;
+			v_list = (List<BbsVO>) obj;  
+           			// ↳즉 처음 게시물을 클릭했을 때 만들어져 seission에 저장해놓 은 vo(클릭한 게시물)를 다시 넣어줌
 		}
 		
 		
@@ -91,71 +92,55 @@ public class ViewController {
 		mv.addObject("vo", vo);
 		
 		// ↱ ★포워드★로 이동하는 것으로 cPage변수를 view에서 사용가능 or mv.addObject로 추가해도 가능함
-		mv.setViewName("bbs/view");
+		if (vo.getBname().equals("BBS")) {
+			mv.setViewName("bbs/view");			
+		}else if (vo.getBname().equals("market")) {
+			mv.setViewName("market/m_view");			
+		}
+		
+		// ↱ 내가 임의로 추가한 코드임.. view.jsp에서 img src에서 사용가능하다고 생각함...
+//		String path = application.getRealPath(uploadPath);
+//		mv.addObject("path", path);
 		
 		// ↱ ★★수정을 눌렀을 때 edit.jsp에서 표현하기 위해 session에 저장함!!!~ (cf. ModelAndView는 리퀘스트에 저장됨...)
 		session.setAttribute("bvo", vo);
 		
 		return mv;
-		
 	}
 	
 	
-	// ↱2군데에서 올거임..수정버튼 눌렀을 경우와 edit폐이지에서 진짜 수정했을 때
 	@RequestMapping("/edit")
-	public ModelAndView eidt(BbsVO vo) throws Exception {
-		                   // ↳ 수정하기 위해 필요한 파라미터들 vo에 자동 저장 되어 넘어옴 
-		                   //   (subject, content, file, b_idx, cPage (cPage는 BbsVO에 없으므로 VO에 추가하자!))
-		
-		
+	public ModelAndView edit(BbsVO vo) throws Exception {
 		ModelAndView mv = new ModelAndView();
-			
-		              // ↱ post 방식은: applica~~로 들어옴  / 멀티파트는: multipa~~로 들어옴 /get 방식은: null로 들어옴
-		String c_type = request.getContentType();  
+		
+		String c_type = request.getContentType();
 		
 		if (c_type != null && c_type.startsWith("multipart")) {
-			// ↳파일이 있으므로 실제 DB수정 작업 해야함
 			
 			MultipartFile mf = vo.getFile();
-			if (mf != null && mf.getSize() > 0 &&mf.getOriginalFilename().trim().length() > 0) {
-				// 정상적인 접근에서 파일이 첨부되지 않았다면 mf가 null은 아니지만 용량이  0일 것임. 
-				// 즉 파일첨부에 대한 확인은 size로 비교함.
-				
-				// ↱파일 저장할 절대경로 구하기
+			if (mf != null && mf.getSize() > 0) {
 				String path = application.getRealPath(uploadPath);
 				
-				// ↱첨부된 파일 이름 얻기 (똑같은 파일이름 변경할 때 사용)
 				String f_name = mf.getOriginalFilename();
 				
-				// ↱첨부파일과 동일한 이름이 있을 경우 파일명 변경하기!
 				f_name = FileUploadUtil.checkSameFileName(f_name, path);
 				
-				// ↱ 업로드 진행!!~    ↱경로, ↱파일이름
-				mf.transferTo(new File(path, f_name));  // 예외처리 하기!
+				mf.transferTo(new File(path, f_name));
 				
-				// ↱ DB작업을 위해 파일명을 vo객체에 저장한다.
 				vo.setFile_name(f_name);
 			}
-			
 			vo.setIp(request.getRemoteAddr());
-			
-			
 			boolean res = b_dao.editBbs(vo);
-			
 			if (res) {
 				mv.setViewName("redirect:/view?b_idx="+vo.getB_idx()+"&cPage="+vo.getcPage());
-				//mv.setViewName("redirect:/bbs?bname="+vo.getBname()+"&cPage="+vo.getcPage());
 			}
-			
 		}else {
-			// 여기는 post 방식으로 "application"으로 왔을 경우임. (즉 view에서 "수정"버튼 눌렀을 경우임)
-			mv.setViewName("bbs/edit"); 
+			mv.setViewName("bbs/edit");
 		}
-		
 		
 		return mv;
 	}
-	
+		
 }
 
 

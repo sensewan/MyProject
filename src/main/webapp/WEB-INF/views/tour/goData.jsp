@@ -10,10 +10,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>login</title>
+<title>데이터활용</title>
 <link type="text/css" rel="stylesheet" href="css/common.css"/>
 <link type="text/css" rel="stylesheet" href="css/login.css"/>
-<link type="text/css" rel="stylesheet" href="css/bbs.css"/>
+<link type="text/css" rel="stylesheet" href="css/goData.css"/>
 
 <style type="text/css">
 
@@ -28,7 +28,7 @@
 		<h1>SK Together</h1>
 		<ul class="gnb">
 			<li><a href=""><span class="menu m01">기브유</span></a></li>
-			<li><a href="goData"><span class="menu m02">위드유</span></a></li>
+			<li><a href=""><span class="menu m02">위드유</span></a></li>
 			<li><a href="bbs?bname=market"><span class="menu m03">스마트 전통시장</span></a></li>
 			<li><a href=""><span class="menu m04">BRAVO!</span></a></li>
 			<li><a href="bbs?bname=BBS"><span class="menu m05">SKT와 사회공헌</span></a></li>
@@ -46,67 +46,44 @@
 				<caption>게시판 목록</caption>
 				<thead>
 					<tr class="title">
-						<th class="no">번호</th>
+						<th class="no">이미지</th>
 						<th class="subject">제목</th>
-						<th class="writer">글쓴이</th>
+						<th class="writer">위치</th>
 						<th class="reg">날짜</th>
-						<th class="hit">조회수</th>
+						<th class="hit">전화번호</th>
 					</tr>
 				</thead>
 				
 				<tbody>
 				
-				<c:if test="${ar != null }">
-					<c:forEach var ="aa" items="${requestScope.ar }" varStatus="st">
+				<c:if test="${list != null }">                         <!-- st는 인덱스임-->
+					<c:forEach var ="aa" items="${requestScope.list }" varStatus="st">
 					<tr>
-						<td>${rowTotal - st.index -(blockList*(nowPage - 1)) }</td>
-						<td style="text-align: left">
-						                <!-- ↱나중에 뒤로가기 or 목록 눌렀을 때 클릭하기 전 페이지로 돌아가기 위해 필요-->
-							<a href="view?cPage=${nowPage }&b_idx=${aa.b_idx}"> ${aa.subject }</a></td>
-						                                 <!-- ↳ 클릭한 게시물을 보여주기 위해 필요 -->
-						<td>${aa.writer }</td>
 						<td>
-						<c:if test="${aa.write_date ne null }">
-							${fn:substring(aa.write_date, 0, 10) }
-						</c:if>
+							<img src="${aa.firstimage }" width="80px" />
+						</td>
+						<td style="text-align: left">
+						                <!-- ↱st는 인덱스 값이므로  idx파라미터에는 인덱스 값이 들어감-->
+							<a href="viewData?idx=${st.index }"> ${aa.title }</a></td>
+						                                 <!-- ↳ 클릭한 게시물을 보여주기 위해 필요 -->
+						<td>${aa.addr2 }</td>
+						<td>
+							${fn:substring(aa.eventstartdate, 0, 10) }
 						</td>					
-						<td>${aa.hit }</td>
+						<td>${aa.tel }</td>
 					</tr>
 					</c:forEach>
 				</c:if>
 				
-				<c:if test="${ar == null }">
+				<c:if test="${list == null }">
 					<tr>
-						<td colspan="5" class="empty">등록된 게시물이 없습니다.</td>
+						<td colspan="5" class="empty">등록된 행사정보가 없습니다.</td>
 					</tr>
 				</c:if>
 	
 				</tbody>
 
-				<tfoot>
-					<tr>
-						<td colspan="4">
-							<!-- <ol class="paging"> --> 
-							${p_code }
-						</td>
 
-
-						<!--                  ↱작다는 표시 (아래것을 StringBuffer에 저장해 놓을거임) -->
-						<!-- <li><a href="#">&lt;</a></li>
-
-							<li class="now">1</li>
-							        
-							<li><a href="#">2</a></li>
-							
-							<li><a href="#">&gt;</a></li>	
-	                        	</ol> -->
-
-						<td>
-							<!-- ↱ 비동기통신 하기 --> 
-							<input type="button" value="글쓰기" id="write_btn" />
-						</td>
-					</tr>
-				</tfoot>
 
 				</table>
 		</div> <!-- class="bbs_area" 끝-->

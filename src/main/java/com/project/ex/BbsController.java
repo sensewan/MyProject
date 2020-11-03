@@ -19,11 +19,10 @@ public class BbsController {
 	private int blockPage = 5;   // 한블록당 보여질 페이지 번호
 	
 
-	@RequestMapping("/bbs") // ↱받은 인자들은 파라미터로 유지가 됨...write.jsp에서도 cPage 사용가능 (즉 글 작성하다가 목록 누르면 원래 cPage로 갈 수 있음)
+	@RequestMapping(value = {"/bbs"}) // ↱받은 인자들은 파라미터로 유지가 됨...write.jsp에서도 cPage 사용가능 (즉 글 작성하다가 목록 누르면 원래 cPage로 갈 수 있음)
 	public ModelAndView bbs(String bname, String cPage) {
 		                    // ↳이렇게 하면 그냥 인자 넘어옴 즉 getParameter 안해도 됨, get도 안해도됨 (만약 없으면 그냥 null)
 		ModelAndView mv = new ModelAndView();   // cf.mv는 ★★ request ★★에 있음... (requestScope 사용가능)
-		
 		if(bname == null) {
 			bname ="BBS";
 		}
@@ -37,7 +36,7 @@ public class BbsController {
 			c_page = Integer.parseInt(cPage);
 		}
 		
-		Paging page = new Paging(c_page, rowTotal, blockList, blockPage); 
+		Paging page = new Paging(c_page, rowTotal, blockList, blockPage, bname); 
 		
 		
 		// ↱게시판 목록을 배열로 얻어내기
@@ -50,8 +49,15 @@ public class BbsController {
 		mv.addObject("p_code", page.getSb().toString());
 		mv.addObject("blockList", blockList);
 		
+		mv.addObject("bname", bname); //내가 추가함
 		
-		mv.setViewName("bbs/list");
+		if (bname.equals("BBS")) {
+			mv.setViewName("bbs/list");			
+		}else if (bname.equals("market")) {
+			mv.setViewName("market/m_list");
+		}
+		
+		//System.out.println("bname확인!!"+bname);
 		
 		return mv;
 		

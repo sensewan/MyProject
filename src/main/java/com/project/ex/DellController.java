@@ -21,7 +21,7 @@ public class DellController {
 	@RequestMapping("/dell")
 	@ResponseBody
 	public Map<String, String> dell(BbsVO vo) {
-//		ModelAndView mv = new ModelAndView();
+		
 		Map<String, String> map = new HashMap<String, String>();
 		
 		int cnt = b_dao.delBbs(vo.getB_idx());
@@ -34,7 +34,6 @@ public class DellController {
 		}
 		
 		
-//		mv.setViewName("redirect:/bbs");
 		return map;
 	}
 }
