@@ -19,10 +19,10 @@ href="css/login.css"/>
 		<h1>SK Together</h1>
 		<ul class="gnb">
 			<li><a href=""><span class="menu m01">기브유</span></a></li>
-			<li><a href=""><span class="menu m02">위드유</span></a></li>
-			<li><a href=""><span class="menu m03">스마트 전통시장</span></a></li>
+			<li><a href="goData"><span class="menu m02">위드유</span></a></li>
+			<li><a href="bbs?bname=market"><span class="menu m03">스마트 전통시장</span></a></li>
 			<li><a href=""><span class="menu m04">BRAVO!</span></a></li>
-			<li><a href=""><span class="menu m05">SKT와 사회공헌</span></a></li>
+			<li><a href="bbs"><span class="menu m05">SKT와 사회공헌</span></a></li>
 		</ul>
 	</div>
 	<!-- 상단 영역 끝 -->
@@ -103,6 +103,11 @@ href="css/login.css"/>
 				</div>
 			</div>
 			<!-- 기관단체회원 끝-->
+			<div>
+				<a href="https://kauth.kakao.com/oauth/authorize?client_id=ff8e46244db2f93a41ed12dafcdd41e5&redirect_uri=http://localhost:8080/kakao_login&response_type=code">
+					<img src="img/kakao_login.png"/>				
+				</a>
+			</div>
 		</div> <!-- class="login_area" 끝-->
 	</div>
 	<!-- 콘텐츠 영역 끝-->

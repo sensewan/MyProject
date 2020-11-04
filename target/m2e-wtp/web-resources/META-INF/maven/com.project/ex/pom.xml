@@ -225,6 +225,13 @@
 		<version>2.0.2</version>
 	</dependency>
 	
+	<!-- 토큰으로 받은 JSON처리하기 -->
+	<dependency>
+    	<groupId>com.googlecode.json-simple</groupId>
+	    <artifactId>json-simple</artifactId>
+    	<version>1.1.1</version>
+	</dependency>
+	
 	
 		    
 	</dependencies>
