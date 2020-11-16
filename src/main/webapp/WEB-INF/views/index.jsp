@@ -44,7 +44,7 @@
 			</div>
 			<h1>SK Together</h1> <!-- img src로 할 수 있지만 그러면 시각장애인들이 읽지를 못한다. -->
 			<ul class="gnb">
-				<li><a href=""><span class="menu m01">기브유</span></a></li>
+				<li><a href="evCar"><span class="menu m01">전기차 현황</span></a></li>
 				                        <!-- └>클래스를 2개 지정한 것임 -->
 				<li><a href="goData"><span class="menu m02">위드유</span></a></li>
 				<li><a href="bbs?bname=market"><span class="menu m03">스마트 전통시장</span></a></li>

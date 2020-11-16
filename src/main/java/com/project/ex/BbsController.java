@@ -63,4 +63,9 @@ public class BbsController {
 		
 	}
 	
+	@RequestMapping("/evCar")
+	public String evCar() {
+		return "bbs/evCar";
+	}
+	
 }

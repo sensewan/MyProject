@@ -130,7 +130,9 @@ public class ViewController {
 				vo.setFile_name(f_name);
 			}
 			vo.setIp(request.getRemoteAddr());
+			
 			boolean res = b_dao.editBbs(vo);
+			
 			if (res) {
 				mv.setViewName("redirect:/view?b_idx="+vo.getB_idx()+"&cPage="+vo.getcPage());
 			}

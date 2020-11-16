@@ -104,7 +104,7 @@ href="css/login.css"/>
 			</div>
 			<!-- 기관단체회원 끝-->
 			<div>
-				<a href="https://kauth.kakao.com/oauth/authorize?client_id=ff8e46244db2f93a41ed12dafcdd41e5&redirect_uri=http://localhost:8080/kakao_login&response_type=code">
+				<a href="https://kauth.kakao.com/oauth/authorize?client_id=ff8e46244db2f93a41ed12dafcdd41e5&redirect_uri=http://localhost:8080/ex/kakao_login&response_type=code">
 					<img src="img/kakao_login.png"/>				
 				</a>
 			</div>

@@ -129,7 +129,7 @@
 		document.forms[0].submit();
 	}
 	
- 	
+/*  	
 	// ↱ 파일 첨부할 경우 이미지 바로 보이게 하기.
   	$("#m_img").change(function(){
 		if(this.files && this.files[0]) {
@@ -140,9 +140,9 @@
 			reader.readAsDataURL(this.files[0]);
 		}
 	});
-
+ */
 	  
-/*   	
+  	
 	$(function () {
 		$("#content").summernote({
 			height:300,
@@ -195,7 +195,7 @@
 			console.log(err);
 		})
 	} 
- */
+ 
 	 
 	
 </script>

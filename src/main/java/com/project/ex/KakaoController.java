@@ -29,8 +29,7 @@ public class KakaoController {
 	public ModelAndView kakaoLogin(String code) {
 		// 카카오 서버에서 인증 코드를 전달해 주는 곳임.
 		
-		ModelAndView mv = new ModelAndView();
-		
+		ModelAndView mv = new ModelAndView();	
 		
 		// 1.인증코드를 인자(String code)로 받는다.
 		mv.addObject("code", code);
@@ -52,13 +51,16 @@ public class KakaoController {
 			
 			// ↱카카오가 원하는 인자4개(grant_type, client_id, redirect_uri, code)를 만들어서 서버로 보내야함
 			StringBuffer sb= new StringBuffer();
-			sb.append("grant_type=authorization_code&client_id=ff8e46244db2f93a41ed12dafcdd41e5");
-			sb.append("&redirect_uri=http://localhost:8080/kakao_login");
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=ff8e46244db2f93a41ed12dafcdd41e5");
+			sb.append("&redirect_uri=http://localhost:8080/ex/kakao_login");
 			sb.append("&code="+code);
 			
 			// ↱전달해야하는 파라미터들을 보내기위해 스트림 작업하기 (무조건 문자열만 보내기 때문에 BufferedWriter 됨)
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream())); // conn과 연결된 BufferedWriter가 만들어짐
-			bw.write(sb.toString());  // 인자4개를 POST방식으로 보냄!!(즉 토큰 받기 위해 https://kauth.kakao.com/oauth/token 으로 인자 4개보냄)
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream())); // <- conn과 연결된 BufferedWriter가 만들어짐
+			
+			// ↱인자4개를 POST방식으로 보냄!!(즉 토큰 받기 위해 https://kauth.kakao.com/oauth/token 으로 인자 4개보냄)
+			bw.write(sb.toString());  
 			bw.flush(); // 보냈으므로 스트림 비우기
 			
 			
@@ -67,7 +69,7 @@ public class KakaoController {
 			//System.out.println("res_code즉 코드성공확인-> "+res_code);
 			
 			// ↱요청이 성공일 경우에 수행
-			if (res_code == 200) {
+			if (res_code == 200) {   // 또는 (res_code == HttpURLConnection.HTTP_OK) 이렇게도 가능함
 				// 요청을 통해 얻은 JSON타입의 결과 메세지를 읽어올거임(즉 토큰을 얻어낼거임)
 				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				// ↳ conn이 InputStream만 갖고 있음 즉 BufferedReader는 크기가 2개임 근데 InputStream은 크기가1임 즉 크기가 서로 다르기 때문에 
@@ -76,7 +78,7 @@ public class KakaoController {
 				String line = "";  // 한줄씩 읽을거임?
 				StringBuffer result = new StringBuffer();  //json을 result에 저장할거임
 				
-				//     ↱ line에 한 줄씩 주세요. 더이상 줄게 없으면 null이 됨
+				//      ↱ line에 한 줄씩 주세요. 더이상 줄게 없으면 null이 됨
 				while((line = br.readLine()) != null) {
 					result.append(line);  // line에 한 줄씩 받은 것을 result 스트링버퍼에 추가하기
 				} // while문 끝
@@ -109,7 +111,8 @@ public class KakaoController {
 				conn2.setRequestMethod("POST");
 				conn2.setDoOutput(true);
 				
-				conn2.setRequestProperty("Authorization", header); // header가지고 통신함
+				// ↱ header가지고 통신함
+				conn2.setRequestProperty("Authorization", header); 
 				
 				// ↱ 통신 성공코드 200 들어감
 				res_code = conn2.getResponseCode(); // ↱200쓴거랑 같은 거임
@@ -118,22 +121,23 @@ public class KakaoController {
 				if (res_code == HttpURLConnection.HTTP_OK) {
 					// 정상적으로 사용자 정보를 요청한경우임
 					
-					// 사용자 정보를 읽어오기
+					// ↱사용자 정보를 읽어오기
 					BufferedReader brd = new BufferedReader(new InputStreamReader(conn2.getInputStream()));
 					
 					StringBuffer sb2 = new StringBuffer();
-					String str = null;
-					while ((str=brd.readLine())!=null) {
-						sb2.append(str);  //카카오 서버에서 전달되어온 모든 값들이 sb2에 저장된다 (JSON형태임)
-					} //while문 
 					
-					    // JSON을 파싱하여 인식시킴 (현재 obj로만 얻어 낸거임 -> json object로 바꿔줘야함)
+					String str = null;
+					while ((str = brd.readLine()) != null) {
+						sb2.append(str);  //카카오 서버에서 전달되어온 모든 값들이 sb2에 저장된다 (JSON형태임)
+					} //while문 끝
+					
+					    // ↱ JSON을 파싱하여 인식시킴 (현재 obj로만 얻어 낸거임 -> json object로 바꿔줘야함)
 					obj = j_par.parse(sb2.toString());
 					
-					// JSON으로 인식된 정보를 다시 JSON객체로 형변한 한다.
+					// ↱JSON으로 인식된 정보를 다시 JSON객체로 형변한 한다.
 					j_obj = (JSONObject) obj;
 					
-					//properties 정보만 갖고옴
+					// ↱ properties 정보만 갖고옴
 					JSONObject n = (JSONObject) j_obj.get("properties"); 
 					
 					String name = (String) n.get("nickname");
