@@ -112,8 +112,8 @@ public class Paging {
 			}
 		}// for문끝
 		
-		System.out.println("-------이전기능 활성 비활성 관련 및 페이지for문 -----------");
-		System.out.println(sb.toString());
+		//System.out.println("-------이전기능 활성 비활성 관련 및 페이지for문 -----------");
+		//System.out.println(sb.toString());
 		
 		// ↱ 다음기능 가능여부 확인 (페이지 블록이 전체가 바뀌는 경우임)
 		if (isNextPage) { //다음기능 활성화
@@ -128,8 +128,8 @@ public class Paging {
 		}
 		sb.append("</ol>");
 		
-		System.out.println("--------다음기능 활성 비활성 관련----------");
-		System.out.println(sb.toString());
+		//System.out.println("--------다음기능 활성 비활성 관련----------");
+		//System.out.println(sb.toString());
 		
 	}
 

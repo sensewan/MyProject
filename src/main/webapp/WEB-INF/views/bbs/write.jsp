@@ -40,7 +40,7 @@
 		
 		<div class="bbs_area" id="bbs">
 			<!--             ↱ WriteController로 가서 @RequestMapping 찾아감 -->
-			<form action="write_ok" method="post" encType="multipart/form-data">
+			<form action="write_ok" method="post" encType="multipart/form-data" name="frm">
 			
 				<!-- <input type="hidden" name="type" value="write"/> -->
 				<!--   ↳위에 input hidden은 multipart라 request.getParameter으로 못받음 Controller로 전달 하지 못하므로 의미가 없음 -->
@@ -61,15 +61,20 @@
 							<th>내용:</th>
 							<td><textarea name="content" id="content" cols="50" rows="8"></textarea></td>
 						</tr>
+						
+<!-- 												
  					 	<tr>
 							<th>첨부파일:</th>
 							<td><input id="m_img" type="file" name="file"/></td>
 						</tr>
-						<tr>
+						
+					
+ 						<tr>
 							<th>첨부된 이미지:</th>
 							<td class="select_img"><img src=""></td>
 						</tr>
-
+ -->
+ 
 						<tr>
 							<td colspan="2">
 								<input type="button" value="보내기" onclick="sendData()"/>
@@ -79,6 +84,7 @@
 						</tr>
 					</tbody>
 				</table>
+				<input type="text" id="file_name" name="file_name" value=""/>
 			</form>
 		</div> <!-- class="bbs_area" 끝-->
 		
@@ -118,14 +124,14 @@
 <script type="text/javascript">
 
 	function sendData(){
-		for(var i=0 ; i<document.forms[0].elements.length ; i++){
+/* 		for(var i=0 ; i<document.forms[0].elements.length ; i++){
 			if(document.forms[0].elements[i].value == ""){
 				alert(document.forms[0].elements[i].name+"를 입력하세요");
 				document.forms[0].elements[i].focus();
 				return;//수행 중단
 			}
 		}
-	
+	 */
 		document.forms[0].submit();
 	}
 	
@@ -144,6 +150,7 @@
 	  
   	
 	$(function () {
+		console.log("SSSSS");
 		$("#content").summernote({
 			height:300,
 			maxHeight:600,  //최대크기지정
@@ -153,8 +160,9 @@
 			focus: true,
 			lang:"ko-KR",
 			
-			callback: {
+			callbacks: {
 				onImageUpload: function (files, editor) {
+					console.log('yyyyyyy');
 					for (var i = 0; i < files.length; i++) {
 						sendFile(files[i], editor);
 					}
@@ -166,11 +174,11 @@
 	function sendFile(file, editor) {
 		var frm = new FormData();
 		
-		frm.append("img", file)
+		frm.append("file", file)
 		
 		// ┌>비동기식 통신하기!!
 		$.ajax({
-			url:"write_ok",
+			url:"write_summer",
 			type:"post",
 			data: frm,
 			// ┌> contentType, processData를 지정해 줘야 일반적인 문자열을 보내는 것이 아닌 -> 파일을 보내는 것이라는 것을 알려줄 수 있다.
@@ -184,16 +192,16 @@
 			var image = $("<img>").attr("src", res.img_url);  // <-img태그 생성됨
 		                           //└>속성 부여
 		     //┌>html id가 content인 내용안에 넣어주기 
-		    $("#content").summernote("insertNode", image[0]);
+		    //$("#content").summernote("insertNode", image[0]);
 		                               //└>(insertNode를 적으면<textarea rows="12" cols="50" id="content" name="content">!!insertNode!!열로 들어감</textarea>)
 		    
 		    
 		    //                            ┌>img 태그를 알아서 만들어서 넣어줌
 			$("#content").summernote("editor.insertImage", res.img_url);
-		
+			$("#file_name").val(res.f_name);
 		}).fail(function(err) { //실패시
 			console.log(err);
-		})
+		});
 	} 
  
 	 
